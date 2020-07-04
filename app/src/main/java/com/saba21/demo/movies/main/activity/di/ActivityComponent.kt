@@ -1,7 +1,8 @@
-package com.saba21.demo.movies.app.activity
+package com.saba21.demo.movies.main.activity.di
 
 import androidx.appcompat.app.AppCompatActivity
 import com.saba21.demo.movies.base.di.scopes.ActivityScope
+import com.saba21.demo.movies.main.activity.MainActivity
 import com.saba21.demo.movies.presentation.splash.di.SplashComponent
 import dagger.BindsInstance
 import dagger.Subcomponent

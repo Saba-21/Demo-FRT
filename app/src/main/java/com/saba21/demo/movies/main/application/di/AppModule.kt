@@ -1,4 +1,4 @@
-package com.saba21.demo.movies.app.application
+package com.saba21.demo.movies.main.application.di
 
 import dagger.Module
 

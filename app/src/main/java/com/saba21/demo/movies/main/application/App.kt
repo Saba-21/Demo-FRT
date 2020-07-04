@@ -1,6 +1,8 @@
-package com.saba21.demo.movies.app.application
+package com.saba21.demo.movies.main.application
 
 import android.app.Application
+import com.saba21.demo.movies.main.application.di.AppComponent
+import com.saba21.demo.movies.main.application.di.DaggerAppComponent
 
 class App : Application() {
 

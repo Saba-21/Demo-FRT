@@ -1,9 +1,12 @@
-package com.saba21.demo.movies.app.activity
+package com.saba21.demo.movies.main.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.saba21.demo.movies.R
-import com.saba21.demo.movies.app.application.App
+import com.saba21.demo.movies.main.activity.di.ActivityComponent
+import com.saba21.demo.movies.main.activity.viewModel.MainViewModel
+import com.saba21.demo.movies.main.application.App
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -14,6 +17,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     val activityComponent: ActivityComponent get() = component
+
+    @Inject
+    lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

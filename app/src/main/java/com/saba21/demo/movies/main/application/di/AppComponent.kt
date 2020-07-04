@@ -1,7 +1,8 @@
-package com.saba21.demo.movies.app.application
+package com.saba21.demo.movies.main.application.di
 
 import android.app.Application
-import com.saba21.demo.movies.app.activity.ActivityComponent
+import com.saba21.demo.movies.main.activity.di.ActivityComponent
+import com.saba21.demo.movies.main.application.App
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
