@@ -1,4 +1,4 @@
-package com.saba21.demo.movies.base
+package com.saba21.demo.movies.base.di.scopes
 
 import javax.inject.Scope
 
