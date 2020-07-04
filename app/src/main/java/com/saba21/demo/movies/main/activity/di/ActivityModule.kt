@@ -3,11 +3,11 @@ package com.saba21.demo.movies.main.activity.di
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.saba21.demo.movies.base.di.scopes.ActivityScope
-import com.saba21.demo.movies.base.presentation.actionHandling.ActionHandler
+import com.saba21.demo.movies.base.presentation.eventHandling.EventHandler
 import com.saba21.demo.movies.base.presentation.errorHandling.ErrorHandler
 import com.saba21.demo.movies.base.presentation.navigationHandling.NavigationHandler
-import com.saba21.demo.movies.main.activity.viewModel.MainViewModel
-import com.saba21.demo.movies.main.activity.viewModel.MainViewModelFactory
+import com.saba21.demo.movies.main.activity.MainViewModel
+import com.saba21.demo.movies.main.activity.util.MainViewModelFactory
 import dagger.Module
 import dagger.Provides
 
@@ -32,6 +32,6 @@ class ActivityModule {
 
     @Provides
     @ActivityScope
-    fun provideActionHandler(mainViewModel: MainViewModel): ActionHandler = mainViewModel
+    fun provideActionHandler(mainViewModel: MainViewModel): EventHandler = mainViewModel
 
 }

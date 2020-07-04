@@ -14,7 +14,7 @@ import dagger.Lazy
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-abstract class BaseDaggerFragment<VM : BaseViewModel>(
+abstract class BaseDaggerFragment<VM:BaseViewModel<*>>(
     @LayoutRes layoutRes: Int,
     viewModelClass: KClass<out ViewModel>
 ) : Fragment(layoutRes) {

@@ -14,9 +14,7 @@ interface SplashComponent :
 
     @Subcomponent.Factory
     interface Factory {
-
         fun create(@BindsInstance fragment: Fragment): SplashComponent
-
     }
 
     override fun inject(fragment: SplashFragment)

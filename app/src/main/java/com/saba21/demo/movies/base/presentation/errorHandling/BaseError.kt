@@ -1,3 +1,5 @@
 package com.saba21.demo.movies.base.presentation.errorHandling
 
-interface BaseError
+import com.saba21.demo.movies.base.presentation.action.BaseAction
+
+interface BaseError : BaseAction

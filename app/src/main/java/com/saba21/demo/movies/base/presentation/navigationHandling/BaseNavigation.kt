@@ -1,3 +1,5 @@
 package com.saba21.demo.movies.base.presentation.navigationHandling
 
-interface BaseNavigation
+import com.saba21.demo.movies.base.presentation.action.BaseAction
+
+interface BaseNavigation : BaseAction
