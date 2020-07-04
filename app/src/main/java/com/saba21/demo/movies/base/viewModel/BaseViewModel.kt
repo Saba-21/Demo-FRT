@@ -8,13 +8,24 @@ import com.saba21.demo.movies.base.presentation.eventHandling.BaseEvent
 import com.saba21.demo.movies.base.presentation.eventHandling.EventHandler
 import com.saba21.demo.movies.base.presentation.navigationHandling.BaseNavigation
 import com.saba21.demo.movies.base.presentation.navigationHandling.NavigationHandler
+import com.saba21.demo.movies.base.presentation.state.BaseViewState
+import com.saba21.demo.movies.base.presentation.state.BaseViewStateData
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
-abstract class BaseViewModel<ViewAction : BaseAction> : ViewModel() {
+abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<out BaseViewStateData>> :
+    ViewModel() {
+
+    abstract fun setInitialState(): ViewState
+
+    lateinit var currentState: BaseViewStateData
+
+    val viewStateSubject = PublishSubject.create<ViewState>()
+
+    val viewStateRestoreSubject = PublishSubject.create<BaseViewStateData>()
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -29,8 +40,11 @@ abstract class BaseViewModel<ViewAction : BaseAction> : ViewModel() {
 
     private val actionSubject = PublishSubject.create<ViewAction>()
 
-    open fun bindView() {
-
+    open fun onBindView() {
+        if (::currentState.isInitialized)
+            viewStateRestoreSubject.onNext(currentState)
+        else
+            currentState = setInitialState().currentState
     }
 
     protected fun Disposable.addSubscription() {
@@ -45,32 +59,37 @@ abstract class BaseViewModel<ViewAction : BaseAction> : ViewModel() {
         compositeDisposable.add(
             Observable.merge(subject, actionSubject)
                 .flatMap { viewAction ->
-                    when (viewAction) {
-                        is BaseError -> {
-                            mainErrorHandler.handleError(viewAction)
-                            Observable.empty<Unit>()
-                        }
-                        is BaseNavigation -> {
-                            mainNavigationHandler.handleNavigation(viewAction)
-                            Observable.empty<Unit>()
-                        }
-                        is BaseEvent -> {
-                            mainEventHandler.handleAction(viewAction)
-                            Observable.empty<Unit>()
-                        }
-                        else -> onActionReceived(viewAction)
-                            .onErrorResumeNext { _: Throwable ->
-                                Observable.empty()
-                            }
-                    }
+                    processAction(viewAction)
                 }.subscribe {
-
+                    currentState = it.currentState
+                    viewStateSubject.onNext(it)
                 }
         )
     }
 
-    protected open fun onActionReceived(action: ViewAction): Observable<Unit> {
-        return Observable.empty<Unit>()
+    private fun processAction(viewAction: ViewAction): Observable<ViewState> {
+        return when (viewAction) {
+            is BaseError -> {
+                mainErrorHandler.handleError(viewAction)
+                Observable.empty<ViewState>()
+            }
+            is BaseNavigation -> {
+                mainNavigationHandler.handleNavigation(viewAction)
+                Observable.empty<ViewState>()
+            }
+            is BaseEvent -> {
+                mainEventHandler.handleEvent(viewAction)
+                Observable.empty<ViewState>()
+            }
+            else -> onActionReceived(viewAction)
+                .onErrorResumeNext { _: Throwable ->
+                    Observable.empty()
+                }
+        }
+    }
+
+    protected open fun onActionReceived(action: ViewAction): Observable<ViewState> {
+        return Observable.empty<ViewState>()
     }
 
     override fun onCleared() {

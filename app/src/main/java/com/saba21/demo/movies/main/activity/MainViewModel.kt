@@ -31,7 +31,7 @@ class MainViewModel : ViewModel(),
 
     }
 
-    override fun handleAction(event: BaseEvent) {
+    override fun handleEvent(event: BaseEvent) {
 
     }
 

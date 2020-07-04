@@ -14,7 +14,7 @@ import dagger.Lazy
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-abstract class BaseDaggerFragment<VM:BaseViewModel<*>>(
+abstract class BaseDaggerFragment<VM : BaseViewModel<*, *>>(
     @LayoutRes layoutRes: Int,
     viewModelClass: KClass<out ViewModel>
 ) : Fragment(layoutRes) {
@@ -24,11 +24,13 @@ abstract class BaseDaggerFragment<VM:BaseViewModel<*>>(
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         val activityComponent = (activity as MainActivity).activityComponent
 
         @Suppress("UNCHECKED_CAST")
         val fragmentComponent =
             (getComponent(activityComponent) as BaseFragmentComponent<BaseDaggerFragment<VM>>)
+
         fragmentComponent.inject(this)
     }
 
@@ -40,8 +42,7 @@ abstract class BaseDaggerFragment<VM:BaseViewModel<*>>(
         createViewModelLazy(
             viewModelClass,
             { viewModelStore },
-            { viewModelFactory.get() }
-        ).value as VM
+            { viewModelFactory.get() }).value as VM
     }
 
     protected val viewModel: VM get() = mViewModel

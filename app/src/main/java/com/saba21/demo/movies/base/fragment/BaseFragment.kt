@@ -1,31 +1,22 @@
 package com.saba21.demo.movies.base.fragment
 
-import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import com.saba21.demo.movies.base.presentation.action.BaseAction
+import com.saba21.demo.movies.base.presentation.state.BaseViewState
+import com.saba21.demo.movies.base.presentation.state.BaseViewStateData
 import com.saba21.demo.movies.base.viewModel.BaseViewModel
-import io.reactivex.subjects.PublishSubject
 import kotlin.reflect.KClass
 
-abstract class BaseFragment<Action : BaseAction, ViewModel : BaseViewModel<Action>>(
+abstract class BaseFragment<Action : BaseAction, ViewState : BaseViewState<out BaseViewStateData>, ViewModel : BaseViewModel<Action, ViewState>>(
     @LayoutRes layoutRes: Int,
     viewModelClass: KClass<out ViewModel>
-) : BaseDaggerFragment<ViewModel>(layoutRes, viewModelClass) {
+) : BaseMVIFragment<Action, ViewState, ViewModel>(layoutRes, viewModelClass) {
 
-    private val viewActionSubject: PublishSubject<Action> = PublishSubject.create()
-
-    protected fun postAction(action: Action) {
-        viewActionSubject.onNext(action)
+    fun View.onClick(action: () -> Action) {
+        setOnClickListener {
+            postAction(action())
+        }
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        onDraw(view)
-        viewModel.onSubscribeViewAction(viewActionSubject)
-        viewModel.bindView()
-    }
-
-    abstract fun onDraw(view: View)
 
 }

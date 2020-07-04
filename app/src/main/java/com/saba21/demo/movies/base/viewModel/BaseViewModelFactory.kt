@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Lazy
 import javax.inject.Inject
 
-class BaseViewModelFactory<VM : BaseViewModel<*>>
+class BaseViewModelFactory<VM : BaseViewModel<*, *>>
 @Inject constructor(
     private val viewModel: Lazy<VM>
 ) : ViewModelProvider.Factory {

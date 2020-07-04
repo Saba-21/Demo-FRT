@@ -42,13 +42,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun handleNavigation(navigation: MainViewState.Navigation) {
         when (navigation) {
             is MainViewState.Navigation.GoToMovieList -> {
-                supportFragmentManager.commit {
+                supportFragmentManager.commit(true) {
                     replace(R.id.vFragmentContainer, MovieListFragment())
                 }
             }
             is MainViewState.Navigation.GoToMovieDetails -> {
-                supportFragmentManager.commit {
-                    add(R.id.vFragmentContainer, MovieDetailsFragment())
+                supportFragmentManager.commit(true) {
+                    replace(R.id.vFragmentContainer, MovieDetailsFragment())
                     addToBackStack(null)
                 }
             }
