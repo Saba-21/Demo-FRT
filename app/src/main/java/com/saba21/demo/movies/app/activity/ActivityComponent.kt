@@ -1,0 +1,21 @@
+package com.saba21.demo.movies.app.activity
+
+import androidx.appcompat.app.AppCompatActivity
+import com.saba21.demo.movies.base.ActivityScope
+import dagger.BindsInstance
+import dagger.Subcomponent
+
+@ActivityScope
+@Subcomponent(modules = [ActivityModule::class])
+interface ActivityComponent {
+
+    @Subcomponent.Factory
+    interface Factory {
+
+        fun create(@BindsInstance activity: AppCompatActivity): ActivityComponent
+
+    }
+
+    fun inject(activity: MainActivity)
+
+}
