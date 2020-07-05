@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Movie Finder</string>
+    <string name="app_name">Movie Catalog</string>
 
     <string name="tab_title_popular">Popular</string>
     <string name="tab_title_top_rated">Top Rated</string>
     <string name="tab_title_favourite">Favourite</string>
     <string name="splash_screen_title_first_part">Movie</string>
-    <string name="splash_screen_title_second_part">Finder</string>
+    <string name="splash_screen_title_second_part">Catalog</string>
 
 </resources>

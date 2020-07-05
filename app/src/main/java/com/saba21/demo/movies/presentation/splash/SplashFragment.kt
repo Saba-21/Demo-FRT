@@ -4,8 +4,7 @@ import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.constraintlayout.widget.ConstraintSet.END
-import androidx.constraintlayout.widget.ConstraintSet.START
+import androidx.constraintlayout.widget.ConstraintSet.*
 import com.saba21.demo.movies.R
 import com.saba21.demo.movies.base.fragment.BaseFragment
 import com.saba21.demo.movies.main.activity.di.ActivityComponent
@@ -34,6 +33,8 @@ class SplashFragment : BaseFragment<SplashActions, SplashViewState, SplashViewMo
                 connect(tvTitleFirst.id, END, layoutSplash.id, END)
                 connect(tvTitleSecond.id, START, layoutSplash.id, START)
                 connect(tvTitleSecond.id, END, layoutSplash.id, END)
+                connect(ivSplash.id, TOP, tvTitleSecond.id, BOTTOM)
+                connect(ivSplash.id, BOTTOM, layoutSplash.id, BOTTOM)
                 val transition = AutoTransition()
                 transition.duration = 1000
                 TransitionManager.beginDelayedTransition(layoutSplash, transition)
