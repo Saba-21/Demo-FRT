@@ -1,11 +1,13 @@
 package com.saba21.demo.movies.presentation.movieList
 
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.saba21.demo.domain.models.MovieModel
 import com.saba21.demo.movies.R
 import com.saba21.demo.movies.base.fragment.BaseFragment
 import com.saba21.demo.movies.main.activity.di.ActivityComponent
+import com.saba21.demo.movies.presentation.movieList.adapters.MoviePages
+import com.saba21.demo.movies.presentation.movieList.adapters.MoviePagesAdapter
 import com.saba21.demo.movies.presentation.movieList.di.MovieListComponent
 import com.saba21.simplepagingadapter.library.PagingManager
 import kotlinx.android.synthetic.main.fragment_movie_list.*
@@ -16,7 +18,9 @@ class MovieListFragment : BaseFragment<MovieListActions, MovieListViewState, Mov
     MovieListViewModel::class
 ) {
 
-    private lateinit var pagingManager: PagingManager<MovieModel>
+    private lateinit var popularPageManager: PagingManager<MovieModel>
+    private lateinit var topRatedPageManager: PagingManager<MovieModel>
+    private lateinit var favouritePageManager: PagingManager<MovieModel>
 
     override fun getComponent(activityComponent: ActivityComponent): MovieListComponent {
         return activityComponent.getMovieListComponentFactory().create(this)
@@ -24,37 +28,70 @@ class MovieListFragment : BaseFragment<MovieListActions, MovieListViewState, Mov
 
     override fun onDraw(view: View, lastState: MovieListViewState?) {
         super.onDraw(view, lastState)
-
-        pagingManager = PagingManager
-            .builder<MovieModel>()
-            .setLifecycle(this)
-            .setPageSize(20)
-            .setLayout(R.layout.item_movie)
-            .onItemBind { itemView, _, item ->
-                onBindItem(itemView, item)
-            }.checkItemIds { oldItem, newItem ->
-                oldItem.id == newItem.id
-            }.checkItemContent { oldItem, newItem ->
-                oldItem == newItem
-            }.onDataRequested { pageIndex, _ ->
-                postAction(MovieListActions.LoadTopRatedMoviesPage(pageIndex))
-            }.build()
-
-        rvMovies.adapter = pagingManager.getAdapter()
-        rvMovies.layoutManager = LinearLayoutManager(context)
-
-    }
-
-    private fun onBindItem(itemView: View, item: MovieModel) {
-        itemView.tvTitle.text = item.title
+        initMoviePageManagers()
+        setUpMoviePages()
     }
 
     override fun reflectState(state: MovieListViewState) {
         when (state) {
             is MovieListViewState.DrawTopRatedMovies -> {
-                pagingManager.setData(state.pageIndex, state.movies)
+                topRatedPageManager.setData(state.pageIndex, state.movies)
+            }
+            is MovieListViewState.DrawPopularMovies -> {
+                popularPageManager.setData(state.pageIndex, state.movies)
             }
         }
+    }
+
+    private fun setUpMoviePages() {
+        val pageTitles =
+            MoviePages.values().toList().sortedBy { it.position }.map { getString(it.titleRes) }
+        vpMovies.adapter = MoviePagesAdapter(pageTitles, requestAdapter = ::requestMoviePageAdapter)
+        vpMovies.offscreenPageLimit = pageTitles.size
+        tbMovies.setupWithViewPager(vpMovies)
+    }
+
+    private fun initMoviePageManagers() {
+        popularPageManager = getMoviePageManager { pageIndex ->
+            postAction(MovieListActions.LoadPopularMoviesPage(pageIndex))
+        }
+        topRatedPageManager = getMoviePageManager { pageIndex ->
+            postAction(MovieListActions.LoadTopRatedMoviesPage(pageIndex))
+        }
+        favouritePageManager = getMoviePageManager {
+
+        }
+    }
+
+    private fun requestMoviePageAdapter(position: Int): RecyclerView.Adapter<*> {
+        return when (MoviePages.values().associateBy(MoviePages::position)[position]!!) {
+            MoviePages.Popular -> popularPageManager.getAdapter()
+            MoviePages.TopRated -> topRatedPageManager.getAdapter()
+            MoviePages.Favourite -> favouritePageManager.getAdapter()
+        }
+    }
+
+    private fun getMoviePageManager(
+        onDataRequested: (Int) -> Unit
+    ): PagingManager<MovieModel> {
+        return PagingManager
+            .builder<MovieModel>()
+            .setLifecycle(this)
+            .setPageSize(20)
+            .setLayout(R.layout.item_movie)
+            .onItemBind { itemView, _, item ->
+                onBindMovieItem(itemView, item)
+            }.checkItemIds { oldItem, newItem ->
+                oldItem.id == newItem.id
+            }.checkItemContent { oldItem, newItem ->
+                oldItem == newItem
+            }.onDataRequested { pageIndex, _ ->
+                onDataRequested.invoke(pageIndex)
+            }.build()
+    }
+
+    private fun onBindMovieItem(itemView: View, item: MovieModel) {
+        itemView.tvTitle.text = item.title
     }
 
 }

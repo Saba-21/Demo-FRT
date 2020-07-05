@@ -16,7 +16,7 @@ class MovieDTO(
     @SerialName("release_date")
     val releaseDate: String,
     @SerialName("poster_path")
-    val posterUrl: String,
+    val posterUrl: String?,
     @SerialName("vote_average")
     val rating: Float
 )
