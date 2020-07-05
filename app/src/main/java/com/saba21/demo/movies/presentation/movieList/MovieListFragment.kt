@@ -2,6 +2,9 @@ package com.saba21.demo.movies.presentation.movieList
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.saba21.demo.domain.models.MovieModel
 import com.saba21.demo.movies.R
 import com.saba21.demo.movies.base.fragment.BaseFragment
@@ -77,7 +80,7 @@ class MovieListFragment : BaseFragment<MovieListActions, MovieListViewState, Mov
         return PagingManager
             .builder<MovieModel>()
             .setLifecycle(this)
-            .setPageSize(20)
+            .setPageSize(viewModel.moviePageSize)
             .setLayout(R.layout.item_movie)
             .onItemBind { itemView, _, item ->
                 onBindMovieItem(itemView, item)
@@ -91,7 +94,12 @@ class MovieListFragment : BaseFragment<MovieListActions, MovieListViewState, Mov
     }
 
     private fun onBindMovieItem(itemView: View, item: MovieModel) {
-        itemView.tvTitle.text = item.title
+        Glide.with(itemView.context)
+            .load(item.posterUrl)
+            .error(R.drawable.shape_image_placeholder)
+            .placeholder(R.drawable.shape_image_placeholder)
+            .transform(CenterCrop(), RoundedCorners(24))
+            .into(itemView.ivPoster)
     }
 
 }

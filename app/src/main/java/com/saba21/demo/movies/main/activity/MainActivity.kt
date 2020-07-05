@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
             is MainViewState.Navigation.GoToMovieDetails -> {
                 supportFragmentManager.commit(true) {
-                    replace(R.id.vFragmentContainer, MovieDetailsFragment())
+                    add(R.id.vFragmentContainer, MovieDetailsFragment())
                     addToBackStack(null)
                 }
             }

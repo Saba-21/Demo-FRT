@@ -14,6 +14,8 @@ class MovieListViewModel
 
     override val initialViewState: MovieListViewState = MovieListViewState.Initial
 
+    val moviePageSize = 20
+
     override fun onActionReceived(action: MovieListActions): Observable<MovieListViewState> {
         return when (action) {
             is MovieListActions.LoadPopularMoviesPage -> {

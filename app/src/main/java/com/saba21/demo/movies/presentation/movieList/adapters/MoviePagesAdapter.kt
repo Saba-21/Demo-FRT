@@ -16,6 +16,8 @@ class MoviePagesAdapter(
             .apply {
                 layoutManager = GridLayoutManager(context, 2)
                 adapter = requestAdapter.invoke(position)
+                if (itemDecorationCount == 0)
+                    addItemDecoration(MovieListItemDecoration(context))
                 container.addView(this)
             }
     }

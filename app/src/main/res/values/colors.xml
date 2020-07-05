@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#DD0E0E</color>
 
-    <color name="ic_launcher_background">@color/colorAccent</color>
     <color name="text_color_black">#000000</color>
+    <color name="common_screen_background">#ffffff</color>
+    <color name="movie_poster_placeholder">#ececec</color>
 
 </resources>
