@@ -9,9 +9,11 @@ class SplashViewModel @Inject constructor() : BaseViewModel<SplashActions, Splas
 
     override val initialViewState: SplashViewState = SplashViewState.Initial
 
+    private val splashScreenTimeOut = 1500L
+
     override fun onBindView(initial: Boolean) {
         Observable.just(SplashActions.Navigation.GoToMainScreen)
-            .delay(1500, TimeUnit.MILLISECONDS)
+            .delay(splashScreenTimeOut, TimeUnit.MILLISECONDS)
             .subscribe(this::postAction)
             .addSubscription()
     }
