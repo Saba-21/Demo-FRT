@@ -1,5 +1,7 @@
 package com.saba21.demo.domain.models
 
+import java.io.Serializable
+
 class MovieModel(
     val id: Int,
     val title: String,
@@ -8,4 +10,4 @@ class MovieModel(
     val releaseDate: String,
     val posterUrl: String,
     val rating: Float
-)
+) : Serializable

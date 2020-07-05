@@ -1,5 +1,6 @@
 package com.saba21.demo.movies.presentation.movieDetails
 
+import com.saba21.demo.domain.models.MovieModel
 import com.saba21.demo.movies.base.presentation.state.BaseViewState
 import com.saba21.demo.movies.base.presentation.state.BaseViewStateData
 
@@ -9,6 +10,12 @@ sealed class MovieDetailsViewState(
 
     object Initial : MovieDetailsViewState()
 
-    class MovieDetailsViewData : BaseViewStateData()
+    class DrawMovieDetails(val movieModel: MovieModel) : MovieDetailsViewState(
+        stateReducer = {
+            it.copy(movieModel = movieModel)
+        }
+    )
+
+    data class MovieDetailsViewData(val movieModel: MovieModel? = null) : BaseViewStateData()
 
 }

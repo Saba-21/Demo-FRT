@@ -9,8 +9,8 @@ import com.saba21.demo.domain.models.MovieModel
 import com.saba21.demo.movies.R
 import com.saba21.demo.movies.base.fragment.BaseFragment
 import com.saba21.demo.movies.main.activity.di.ActivityComponent
-import com.saba21.demo.movies.presentation.movieList.adapters.MoviePages
-import com.saba21.demo.movies.presentation.movieList.adapters.MoviePagesAdapter
+import com.saba21.demo.movies.presentation.movieList.util.MoviePages
+import com.saba21.demo.movies.presentation.movieList.util.MoviePagesAdapter
 import com.saba21.demo.movies.presentation.movieList.di.MovieListComponent
 import com.saba21.simplepagingadapter.library.PagingManager
 import kotlinx.android.synthetic.main.fragment_movie_list.*
@@ -94,6 +94,9 @@ class MovieListFragment : BaseFragment<MovieListActions, MovieListViewState, Mov
     }
 
     private fun onBindMovieItem(itemView: View, item: MovieModel) {
+        itemView.onClick {
+            MovieListActions.Navigation.GoToDetails(item)
+        }
         Glide.with(itemView.context)
             .load(item.posterUrl)
             .error(R.drawable.shape_image_placeholder)

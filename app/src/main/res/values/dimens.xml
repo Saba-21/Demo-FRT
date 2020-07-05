@@ -7,4 +7,10 @@
     <dimen name="movie_list_toolbar_size">70dp</dimen>
     <dimen name="movie_list_toolbar_title_margin">26dp</dimen>
     <dimen name="movie_list_screen_title_text_size">24sp</dimen>
+    <dimen name="movie_details_background_poster_height">220dp</dimen>
+    <dimen name="movie_details_main_poster_height">180dp</dimen>
+    <dimen name="movie_details_main_poster_width">120dp</dimen>
+    <dimen name="movie_details_field_margin">20dp</dimen>
+    <dimen name="movie_details_button_size">46dp</dimen>
+    <dimen name="movie_details_button_padding">13dp</dimen>
 </resources>

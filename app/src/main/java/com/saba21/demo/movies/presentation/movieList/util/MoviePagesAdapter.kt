@@ -1,4 +1,4 @@
-package com.saba21.demo.movies.presentation.movieList.adapters
+package com.saba21.demo.movies.presentation.movieList.util
 
 import android.view.View
 import android.view.ViewGroup

@@ -61,16 +61,17 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
         actionSubject.onNext(action)
     }
 
+    protected fun postState(state: ViewState) {
+        @Suppress("UNCHECKED_CAST")
+        currentViewState = state.updateCurrentState(currentViewState) as ViewState
+        viewStateSubject.onNext(state)
+    }
+
     fun onSubscribeViewAction(subject: Observable<ViewAction>) {
         compositeDisposable.add(
             Observable.merge(subject, actionSubject)
-                .flatMap { viewAction ->
-                    processAction(viewAction)
-                }.subscribe {
-                    @Suppress("UNCHECKED_CAST")
-                    currentViewState = it.updateCurrentState(currentViewState) as ViewState
-                    viewStateSubject.onNext(it)
-                }
+                .flatMap(this::processAction)
+                .subscribe(this::postState)
         )
     }
 

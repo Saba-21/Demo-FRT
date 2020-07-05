@@ -6,5 +6,9 @@
     <string name="tab_title_favourite">Favourite</string>
     <string name="splash_screen_title_first_part">Movie</string>
     <string name="splash_screen_title_second_part">Catalog</string>
+    <string name="movie_details_field_name_rating">Rating: %1$s</string>
+    <string name="movie_details_field_name_original_title">Original Title: %1$s</string>
+    <string name="movie_details_field_name_release_date">Release Date: %1$s</string>
+    <string name="movie_details_field_name_overview">Overview:</string>
 
 </resources>

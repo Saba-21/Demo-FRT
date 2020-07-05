@@ -2,11 +2,14 @@ package com.saba21.demo.movies.main.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import com.saba21.demo.movies.R
 import com.saba21.demo.movies.main.activity.di.ActivityComponent
 import com.saba21.demo.movies.main.application.App
 import com.saba21.demo.movies.presentation.movieDetails.MovieDetailsFragment
+import com.saba21.demo.movies.presentation.movieDetails.util.MOVIE_DETAILS_PARAMS_KEY
+import com.saba21.demo.movies.presentation.movieDetails.util.MovieDetailsParams
 import com.saba21.demo.movies.presentation.movieList.MovieListFragment
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -41,6 +44,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun handleNavigation(navigation: MainViewState.Navigation) {
         when (navigation) {
+            is MainViewState.Navigation.GoBack -> onBackPressed()
             is MainViewState.Navigation.GoToMovieList -> {
                 supportFragmentManager.commit(true) {
                     replace(R.id.vFragmentContainer, MovieListFragment())
@@ -48,7 +52,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
             is MainViewState.Navigation.GoToMovieDetails -> {
                 supportFragmentManager.commit(true) {
-                    add(R.id.vFragmentContainer, MovieDetailsFragment())
+                    val fragment = MovieDetailsFragment()
+                        .apply {
+                            arguments =
+                                bundleOf(MOVIE_DETAILS_PARAMS_KEY to MovieDetailsParams(navigation.movieModel))
+                        }
+                    add(R.id.vFragmentContainer, fragment)
                     addToBackStack(null)
                 }
             }

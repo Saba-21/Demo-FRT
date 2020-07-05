@@ -1,4 +1,4 @@
-package com.saba21.demo.movies.presentation.movieList.adapters
+package com.saba21.demo.movies.presentation.movieList.util
 
 import androidx.annotation.StringRes
 import com.saba21.demo.movies.R
