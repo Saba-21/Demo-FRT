@@ -21,11 +21,11 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
 
     abstract fun setInitialState(): ViewState
 
-    lateinit var currentState: BaseViewStateData
+    private lateinit var currentViewState: ViewState
 
     val viewStateSubject = PublishSubject.create<ViewState>()
 
-    val viewStateRestoreSubject = PublishSubject.create<BaseViewStateData>()
+    val viewStateRestoreSubject = PublishSubject.create<ViewState>()
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -41,10 +41,10 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
     private val actionSubject = PublishSubject.create<ViewAction>()
 
     open fun onBindView() {
-        if (::currentState.isInitialized)
-            viewStateRestoreSubject.onNext(currentState)
+        if (::currentViewState.isInitialized)
+            viewStateRestoreSubject.onNext(currentViewState)
         else
-            currentState = setInitialState().currentState
+            currentViewState = setInitialState()
     }
 
     protected fun Disposable.addSubscription() {
@@ -61,7 +61,8 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
                 .flatMap { viewAction ->
                     processAction(viewAction)
                 }.subscribe {
-                    currentState = it.currentState
+                    @Suppress("UNCHECKED_CAST")
+                    currentViewState = it.updateCurrentState(currentViewState) as ViewState
                     viewStateSubject.onNext(it)
                 }
         )
@@ -82,9 +83,6 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
                 Observable.empty<ViewState>()
             }
             else -> onActionReceived(viewAction)
-                .onErrorResumeNext { _: Throwable ->
-                    Observable.empty()
-                }
         }
     }
 

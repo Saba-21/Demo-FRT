@@ -9,4 +9,8 @@ sealed class MovieListActions : BaseAction {
         object GoToDetails : Navigation()
     }
 
+    class LoadTopRatedMoviesPage(val page: Int) : MovieListActions()
+
+    class LoadPopularMoviesPage(val page: Int) : MovieListActions()
+
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import com.saba21.demo.data.di.API_ADDRESS
 import com.saba21.demo.data.di.API_KEY
 import com.saba21.demo.data.di.DataModule
+import com.saba21.demo.data.di.POSTER_ADDRESS
 import com.saba21.demo.movies.R
 import dagger.Module
 import dagger.Provides
@@ -31,5 +32,13 @@ class AppModule {
     fun provideApiAddress(appContext: Context): String {
         return appContext.getString(R.string.api_address)
     }
+
+    @Singleton
+    @Provides
+    @Named(POSTER_ADDRESS)
+    fun providePosterAddress(appContext: Context): String {
+        return appContext.getString(R.string.poster_address)
+    }
+
 
 }

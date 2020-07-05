@@ -55,7 +55,7 @@ abstract class BaseMVIFragment<Action : BaseAction, ViewState : BaseViewState<ou
         onDraw(view)
     }
 
-    open fun restoreState(stateData: BaseViewStateData) {
+    open fun restoreState(lastState: ViewState) {
 
     }
 

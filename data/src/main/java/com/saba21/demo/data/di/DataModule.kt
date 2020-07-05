@@ -70,8 +70,13 @@ class DataModule {
     @Singleton
     @Provides
     fun provideConverterFactory(): Converter.Factory {
-        return Json(JsonBuilder().buildConfiguration())
-            .asConverterFactory(MediaType.parse("application/json")!!)
+        return Json(
+            JsonBuilder()
+            .apply {
+                ignoreUnknownKeys = true
+                isLenient = true
+            }.buildConfiguration()
+        ).asConverterFactory(MediaType.parse("application/json")!!)
     }
 
     @Singleton

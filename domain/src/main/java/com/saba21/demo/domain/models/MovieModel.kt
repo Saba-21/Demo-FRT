@@ -1,11 +1,6 @@
-package com.saba21.demo.data.database.entities
+package com.saba21.demo.domain.models
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "movie")
-class MovieEntity(
-    @PrimaryKey
+class MovieModel(
     val id: Int,
     val title: String,
     val originalTitle: String,
