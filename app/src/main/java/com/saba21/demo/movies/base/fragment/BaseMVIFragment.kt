@@ -48,22 +48,20 @@ abstract class BaseMVIFragment<Action : BaseAction, ViewState : BaseViewState<ou
                     .filter {
                         isAdded
                     }.subscribe {
-                        restoreState(it)
+                        onDraw(view, it)
                     }
             )
-        viewModel.onBindView()
-        onDraw(view)
-    }
-
-    open fun restoreState(lastState: ViewState) {
-
+        val isInitial = viewModel.initializeViewState()
+        viewModel.onBindView(isInitial)
+        if (isInitial)
+            onDraw(view, null)
     }
 
     open fun reflectState(state: ViewState) {
 
     }
 
-    open fun onDraw(view: View) {
+    open fun onDraw(view: View, lastState: ViewState?) {
 
     }
 

@@ -6,8 +6,6 @@ import javax.inject.Inject
 class MovieDetailsViewModel @Inject constructor() :
     BaseViewModel<MovieDetailsActions, MovieDetailsViewState>() {
 
-    override fun setInitialState(): MovieDetailsViewState {
-        return MovieDetailsViewState.Initial
-    }
+    override val initialViewState: MovieDetailsViewState = MovieDetailsViewState.Initial
 
 }

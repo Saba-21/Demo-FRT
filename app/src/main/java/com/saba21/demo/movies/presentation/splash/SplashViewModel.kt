@@ -7,15 +7,13 @@ import javax.inject.Inject
 
 class SplashViewModel @Inject constructor() : BaseViewModel<SplashActions, SplashViewState>() {
 
-    override fun onBindView() {
+    override val initialViewState: SplashViewState = SplashViewState.Initial
+
+    override fun onBindView(initial: Boolean) {
         Observable.just(SplashActions.Navigation.GoToMainScreen)
             .delay(1500, TimeUnit.MILLISECONDS)
             .subscribe(this::postAction)
             .addSubscription()
-    }
-
-    override fun setInitialState(): SplashViewState {
-        return SplashViewState.Initial
     }
 
 }

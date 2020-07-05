@@ -19,13 +19,15 @@ import javax.inject.Inject
 abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<out BaseViewStateData>> :
     ViewModel() {
 
-    abstract fun setInitialState(): ViewState
+    abstract val initialViewState: ViewState
 
     private lateinit var currentViewState: ViewState
 
     val viewStateSubject = PublishSubject.create<ViewState>()
 
     val viewStateRestoreSubject = PublishSubject.create<ViewState>()
+
+    private val actionSubject = PublishSubject.create<ViewAction>()
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -38,13 +40,17 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
     @Inject
     lateinit var mainEventHandler: EventHandler
 
-    private val actionSubject = PublishSubject.create<ViewAction>()
-
-    open fun onBindView() {
-        if (::currentViewState.isInitialized)
-            viewStateRestoreSubject.onNext(currentViewState)
+    fun initializeViewState(): Boolean {
+        val isInitial = !::currentViewState.isInitialized
+        if (isInitial)
+            currentViewState = initialViewState
         else
-            currentViewState = setInitialState()
+            viewStateRestoreSubject.onNext(currentViewState)
+        return isInitial
+    }
+
+    open fun onBindView(initial: Boolean) {
+
     }
 
     protected fun Disposable.addSubscription() {

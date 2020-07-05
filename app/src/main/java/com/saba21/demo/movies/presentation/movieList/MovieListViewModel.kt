@@ -12,26 +12,24 @@ class MovieListViewModel
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase
 ) : BaseViewModel<MovieListActions, MovieListViewState>() {
 
+    override val initialViewState: MovieListViewState = MovieListViewState.Initial
+
     override fun onActionReceived(action: MovieListActions): Observable<MovieListViewState> {
         return when (action) {
             is MovieListActions.LoadPopularMoviesPage -> {
-                getPopularMoviesUseCase.create(action.page)
+                getPopularMoviesUseCase.create(action.page + 1)
                     .map {
                         MovieListViewState.DrawPopularMovies(action.page, it)
                     }
             }
             is MovieListActions.LoadTopRatedMoviesPage -> {
-                getTopRatedMoviesUseCase.create(action.page)
+                getTopRatedMoviesUseCase.create(action.page + 1)
                     .map {
                         MovieListViewState.DrawTopRatedMovies(action.page, it)
                     }
             }
             else -> super.onActionReceived(action)
         }
-    }
-
-    override fun setInitialState(): MovieListViewState {
-        return MovieListViewState.Initial
     }
 
 }
