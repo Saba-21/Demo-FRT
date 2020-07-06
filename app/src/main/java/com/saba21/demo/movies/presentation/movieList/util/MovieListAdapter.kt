@@ -3,6 +3,7 @@ package com.saba21.demo.movies.presentation.movieList.util
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -21,8 +22,10 @@ class MovieListAdapter : RecyclerView.Adapter<MovieViewHolder>() {
     }
 
     fun bindData(movieList: List<MovieModel>) {
+        val diffUtilCallback = MovieListDIffUtil(this.movieList, movieList)
+        val diffUtilResult = DiffUtil.calculateDiff(diffUtilCallback, true)
+        diffUtilResult.dispatchUpdatesTo(this)
         this.movieList = movieList
-        this.notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -49,3 +52,22 @@ class MovieListAdapter : RecyclerView.Adapter<MovieViewHolder>() {
 }
 
 class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+class MovieListDIffUtil(
+    private val oldList: List<MovieModel>,
+    private val newList: List<MovieModel>
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize():
+            Int = oldList.size
+
+    override fun getNewListSize():
+            Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int):
+            Boolean = oldList[oldItemPosition].id == newList[newItemPosition].id
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int):
+            Boolean = oldList[oldItemPosition] == (newList[newItemPosition])
+
+}
