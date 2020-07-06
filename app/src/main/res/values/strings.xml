@@ -10,5 +10,9 @@
     <string name="movie_details_field_name_original_title">Original Title: %1$s</string>
     <string name="movie_details_field_name_release_date">Release Date: %1$s</string>
     <string name="movie_details_field_name_overview">Overview:</string>
+    <string name="error_message_general">Something went wrong</string>
+    <string name="error_message_api">Server failed, try again</string>
+    <string name="error_message_offline">You seem to be offline</string>
+    <string name="error_message_poor_network">Network connection seems poor</string>
 
 </resources>

@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.saba21.demo.movies.base.presentation.action.BaseAction
 import com.saba21.demo.movies.base.presentation.errorHandling.BaseError
 import com.saba21.demo.movies.base.presentation.errorHandling.ErrorHandler
-import com.saba21.demo.movies.base.presentation.eventHandling.BaseEvent
-import com.saba21.demo.movies.base.presentation.eventHandling.EventHandler
+import com.saba21.demo.movies.base.presentation.errorHandling.CommonErrors
 import com.saba21.demo.movies.base.presentation.navigationHandling.BaseNavigation
 import com.saba21.demo.movies.base.presentation.navigationHandling.NavigationHandler
 import com.saba21.demo.movies.base.presentation.state.BaseViewState
@@ -36,9 +35,6 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
 
     @Inject
     lateinit var mainNavigationHandler: NavigationHandler
-
-    @Inject
-    lateinit var mainEventHandler: EventHandler
 
     fun initializeViewState(): Boolean {
         val isInitial = !::currentViewState.isInitialized
@@ -85,11 +81,11 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
                 mainNavigationHandler.handleNavigation(viewAction)
                 Observable.empty<ViewState>()
             }
-            is BaseEvent -> {
-                mainEventHandler.handleEvent(viewAction)
-                Observable.empty<ViewState>()
-            }
             else -> onActionReceived(viewAction)
+                .onErrorResumeNext { throwable: Throwable ->
+                    mainErrorHandler.handleError(CommonErrors.get(throwable))
+                    Observable.empty()
+                }
         }
     }
 

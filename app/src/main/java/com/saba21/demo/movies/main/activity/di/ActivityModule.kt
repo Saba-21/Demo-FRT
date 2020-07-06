@@ -3,7 +3,6 @@ package com.saba21.demo.movies.main.activity.di
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.saba21.demo.movies.base.di.scopes.ActivityScope
-import com.saba21.demo.movies.base.presentation.eventHandling.EventHandler
 import com.saba21.demo.movies.base.presentation.errorHandling.ErrorHandler
 import com.saba21.demo.movies.base.presentation.navigationHandling.NavigationHandler
 import com.saba21.demo.movies.main.activity.MainViewModel
@@ -29,9 +28,5 @@ class ActivityModule {
     @Provides
     @ActivityScope
     fun provideErrorHandler(mainViewModel: MainViewModel): ErrorHandler = mainViewModel
-
-    @Provides
-    @ActivityScope
-    fun provideActionHandler(mainViewModel: MainViewModel): EventHandler = mainViewModel
 
 }
