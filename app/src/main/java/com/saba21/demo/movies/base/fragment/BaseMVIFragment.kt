@@ -29,15 +29,11 @@ abstract class BaseMVIFragment<Action : BaseAction, ViewState : BaseViewState<ou
         super.onAttach(context)
         if (!viewActionSubject.hasObservers())
             viewModel.onSubscribeViewAction(viewActionSubject)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         if (!viewModel.viewStateSubject.hasObservers())
             compositeDisposable.add(
                 viewModel.viewStateSubject
                     .filter {
-                        isAdded
+                        view != null
                     }.subscribe {
                         reflectState(it)
                     }
@@ -46,11 +42,15 @@ abstract class BaseMVIFragment<Action : BaseAction, ViewState : BaseViewState<ou
             compositeDisposable.add(
                 viewModel.viewStateRestoreSubject
                     .filter {
-                        isAdded
+                        view != null
                     }.subscribe {
-                        onDraw(view, it)
+                        onDraw(requireView(), it)
                     }
             )
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val isInitial = viewModel.initializeViewState()
         viewModel.onBindView(isInitial)
         if (isInitial)
