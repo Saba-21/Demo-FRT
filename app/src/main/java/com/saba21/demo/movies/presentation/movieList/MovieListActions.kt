@@ -14,4 +14,6 @@ sealed class MovieListActions : BaseAction {
 
     class LoadPopularMoviesPage(val page: Int) : MovieListActions()
 
+    object LoadFavoriteMoviesPage : MovieListActions()
+
 }

@@ -29,12 +29,20 @@ class MovieDetailsFragment :
     override fun reflectState(state: MovieDetailsViewState) {
         when (state) {
             is MovieDetailsViewState.DrawMovieDetails -> drawMovieDetails(state.movieModel)
+            is MovieDetailsViewState.MakeMovieFavorite -> setFavoriteStatus(state.isFavorite)
         }
+    }
+
+    private fun setFavoriteStatus(isFavorite: Boolean) {
+        ivFavorite.isSelected = isFavorite
     }
 
     private fun bindActions() {
         ivBack.onClick {
             MovieDetailsActions.Navigation.GoBack
+        }
+        ivFavorite.onClick {
+            MovieDetailsActions.SaveFavorite
         }
     }
 

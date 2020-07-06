@@ -9,4 +9,8 @@ sealed class MovieDetailsActions : BaseAction {
         object GoBack : Navigation()
     }
 
+    object CheckFavorite : MovieDetailsActions()
+
+    object SaveFavorite : MovieDetailsActions()
+
 }

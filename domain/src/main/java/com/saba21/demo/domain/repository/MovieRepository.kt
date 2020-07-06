@@ -9,4 +9,10 @@ interface MovieRepository {
 
     fun getPopularMovies(page: Int): Observable<List<MovieModel>>
 
+    fun saveFavoriteMovie(movieModel: MovieModel): Observable<Unit>
+
+    fun getFavoriteMovies(): Observable<List<MovieModel>>
+
+    fun getFavoriteMovieCountById(id: Int): Observable<Int>
+
 }

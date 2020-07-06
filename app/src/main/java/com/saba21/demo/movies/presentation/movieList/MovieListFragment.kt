@@ -9,9 +9,10 @@ import com.saba21.demo.domain.models.MovieModel
 import com.saba21.demo.movies.R
 import com.saba21.demo.movies.base.fragment.BaseFragment
 import com.saba21.demo.movies.main.activity.di.ActivityComponent
+import com.saba21.demo.movies.presentation.movieList.di.MovieListComponent
+import com.saba21.demo.movies.presentation.movieList.util.MovieListAdapter
 import com.saba21.demo.movies.presentation.movieList.util.MoviePages
 import com.saba21.demo.movies.presentation.movieList.util.MoviePagesAdapter
-import com.saba21.demo.movies.presentation.movieList.di.MovieListComponent
 import com.saba21.simplepagingadapter.library.PagingManager
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 import kotlinx.android.synthetic.main.item_movie.view.*
@@ -23,7 +24,7 @@ class MovieListFragment : BaseFragment<MovieListActions, MovieListViewState, Mov
 
     private lateinit var popularPageManager: PagingManager<MovieModel>
     private lateinit var topRatedPageManager: PagingManager<MovieModel>
-    private lateinit var favouritePageManager: PagingManager<MovieModel>
+    private lateinit var favoritesAdapter: MovieListAdapter
 
     override fun getComponent(activityComponent: ActivityComponent): MovieListComponent {
         return activityComponent.getMovieListComponentFactory().create(this)
@@ -43,6 +44,9 @@ class MovieListFragment : BaseFragment<MovieListActions, MovieListViewState, Mov
             is MovieListViewState.DrawPopularMovies -> {
                 popularPageManager.setData(state.pageIndex, state.movies)
             }
+            is MovieListViewState.DrawFavoriteMovies -> {
+                favoritesAdapter.bindData(state.movies)
+            }
         }
     }
 
@@ -61,16 +65,18 @@ class MovieListFragment : BaseFragment<MovieListActions, MovieListViewState, Mov
         topRatedPageManager = getMoviePageManager { pageIndex ->
             postAction(MovieListActions.LoadTopRatedMoviesPage(pageIndex))
         }
-        favouritePageManager = getMoviePageManager {
-
+        favoritesAdapter = MovieListAdapter()
+        favoritesAdapter.setOnClick {
+            postAction(MovieListActions.Navigation.GoToDetails(it))
         }
+        postAction(MovieListActions.LoadFavoriteMoviesPage)
     }
 
     private fun requestMoviePageAdapter(position: Int): RecyclerView.Adapter<*> {
         return when (MoviePages.values().associateBy(MoviePages::position)[position]!!) {
             MoviePages.Popular -> popularPageManager.getAdapter()
             MoviePages.TopRated -> topRatedPageManager.getAdapter()
-            MoviePages.Favourite -> favouritePageManager.getAdapter()
+            MoviePages.Favourite -> favoritesAdapter
         }
     }
 

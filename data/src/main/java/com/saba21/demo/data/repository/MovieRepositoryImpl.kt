@@ -33,4 +33,25 @@ class MovieRepositoryImpl @Inject constructor(
             }.async()
     }
 
+    override fun saveFavoriteMovie(movieModel: MovieModel): Observable<Unit> {
+        return movieDatabase.getMovieDao().saveMovie(movieDomainConverter.toEntity(movieModel))
+            .andThen(Observable.just(Unit)).async()
+    }
+
+    override fun getFavoriteMovies(): Observable<List<MovieModel>> {
+        return movieDatabase.getMovieDao()
+            .getMovies()
+            .map {
+                it.map { item ->
+                    movieDomainConverter.fromEntity(item)
+                }
+            }.async()
+    }
+
+    override fun getFavoriteMovieCountById(id: Int): Observable<Int> {
+        return movieDatabase.getMovieDao()
+            .getMovieCountById(id)
+            .async()
+    }
+
 }

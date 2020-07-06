@@ -10,12 +10,19 @@ sealed class MovieDetailsViewState(
 
     object Initial : MovieDetailsViewState()
 
+    class MakeMovieFavorite(val isFavorite: Boolean) : MovieDetailsViewState(stateReducer = {
+        it.copy(isFavorite = isFavorite)
+    })
+
     class DrawMovieDetails(val movieModel: MovieModel) : MovieDetailsViewState(
         stateReducer = {
             it.copy(movieModel = movieModel)
         }
     )
 
-    data class MovieDetailsViewData(val movieModel: MovieModel? = null) : BaseViewStateData()
+    data class MovieDetailsViewData(
+        val movieModel: MovieModel? = null,
+        val isFavorite: Boolean? = null
+    ) : BaseViewStateData()
 
 }
