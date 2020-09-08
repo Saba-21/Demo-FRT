@@ -3,11 +3,13 @@ package com.saba21.demo.movies.main.activity.di
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.saba21.demo.movies.base.di.scopes.ActivityScope
-import com.saba21.demo.movies.base.presentation.errorHandling.ErrorHandler
-import com.saba21.demo.movies.base.presentation.navigationHandling.NavigationHandler
+import com.saba21.demo.movies.base.presentation.errorHandling.IntermediaryErrorHandler
+import com.saba21.demo.movies.base.presentation.navigationHandling.IntermediaryNavigationHandler
+import com.saba21.demo.movies.base.presentation.utilityHandling.IntermediaryUtilityHandler
 import com.saba21.demo.movies.main.activity.MainViewModel
+import com.saba21.demo.movies.main.activity.handlers.MainAlertHandler
+import com.saba21.demo.movies.main.activity.handlers.MainLoaderHandler
 import com.saba21.demo.movies.main.activity.handlers.MainNavigationHandler
-import com.saba21.demo.movies.main.activity.handlers.MainUtilitiesHandler
 import dagger.Module
 import dagger.Provides
 
@@ -24,8 +26,16 @@ class ActivityModule {
 
     @Provides
     @ActivityScope
-    fun provideMainUtilityHandler(activity: AppCompatActivity): MainUtilitiesHandler {
-        return MainUtilitiesHandler(
+    fun provideMainAlertHandler(activity: AppCompatActivity): MainAlertHandler {
+        return MainAlertHandler(
+            activity
+        )
+    }
+
+    @Provides
+    @ActivityScope
+    fun provideMainLoaderHandler(activity: AppCompatActivity): MainLoaderHandler {
+        return MainLoaderHandler(
             activity
         )
     }
@@ -43,10 +53,17 @@ class ActivityModule {
 
     @Provides
     @ActivityScope
-    fun provideNavigationHandler(mainViewModel: MainViewModel): NavigationHandler = mainViewModel
+    fun provideNavigationHandler(mainViewModel: MainViewModel):
+            IntermediaryNavigationHandler = mainViewModel
 
     @Provides
     @ActivityScope
-    fun provideErrorHandler(mainViewModel: MainViewModel): ErrorHandler = mainViewModel
+    fun provideErrorHandler(mainViewModel: MainViewModel):
+            IntermediaryErrorHandler = mainViewModel
+
+    @Provides
+    @ActivityScope
+    fun provideUtilityHandler(mainViewModel: MainViewModel):
+            IntermediaryUtilityHandler = mainViewModel
 
 }

@@ -3,12 +3,14 @@ package com.saba21.demo.movies.base.viewModel
 import androidx.lifecycle.ViewModel
 import com.saba21.demo.movies.base.presentation.action.BaseAction
 import com.saba21.demo.movies.base.presentation.errorHandling.BaseError
-import com.saba21.demo.movies.base.presentation.errorHandling.ErrorHandler
 import com.saba21.demo.movies.base.presentation.errorHandling.CommonErrors
+import com.saba21.demo.movies.base.presentation.errorHandling.IntermediaryErrorHandler
 import com.saba21.demo.movies.base.presentation.navigationHandling.BaseNavigation
-import com.saba21.demo.movies.base.presentation.navigationHandling.NavigationHandler
+import com.saba21.demo.movies.base.presentation.navigationHandling.IntermediaryNavigationHandler
 import com.saba21.demo.movies.base.presentation.state.BaseViewState
 import com.saba21.demo.movies.base.presentation.state.BaseViewStateData
+import com.saba21.demo.movies.base.presentation.utilityHandling.BaseLoader
+import com.saba21.demo.movies.base.presentation.utilityHandling.IntermediaryUtilityHandler
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -31,10 +33,13 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     @Inject
-    lateinit var mainErrorHandler: ErrorHandler
+    lateinit var intermediaryErrorHandler: IntermediaryErrorHandler
 
     @Inject
-    lateinit var mainNavigationHandler: NavigationHandler
+    lateinit var intermediaryNavigationHandler: IntermediaryNavigationHandler
+
+    @Inject
+    lateinit var intermediaryUtilityHandler: IntermediaryUtilityHandler
 
     fun initializeViewState(): Boolean {
         val isInitial = !::currentViewState.isInitialized
@@ -74,16 +79,20 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
     private fun processAction(viewAction: ViewAction): Observable<ViewState> {
         return when (viewAction) {
             is BaseError -> {
-                mainErrorHandler.handleError(viewAction)
+                intermediaryErrorHandler.handleError(viewAction)
                 Observable.empty<ViewState>()
             }
             is BaseNavigation -> {
-                mainNavigationHandler.handleNavigation(viewAction)
+                intermediaryNavigationHandler.handleNavigation(viewAction)
+                Observable.empty<ViewState>()
+            }
+            is BaseLoader -> {
+                intermediaryUtilityHandler.handleLoader(viewAction)
                 Observable.empty<ViewState>()
             }
             else -> onActionReceived(viewAction)
                 .onErrorResumeNext { throwable: Throwable ->
-                    mainErrorHandler.handleError(CommonErrors.get(throwable))
+                    intermediaryErrorHandler.handleError(CommonErrors.get(throwable))
                     Observable.empty()
                 }
         }
