@@ -2,36 +2,38 @@ package com.saba21.demo.movies.main.activity
 
 import androidx.lifecycle.ViewModel
 import com.saba21.demo.movies.base.presentation.errorHandling.BaseError
-import com.saba21.demo.movies.base.presentation.errorHandling.ErrorHandler
 import com.saba21.demo.movies.base.presentation.errorHandling.CommonErrors
+import com.saba21.demo.movies.base.presentation.errorHandling.ErrorHandler
 import com.saba21.demo.movies.base.presentation.navigationHandling.BaseNavigation
 import com.saba21.demo.movies.base.presentation.navigationHandling.NavigationHandler
+import com.saba21.demo.movies.main.activity.handlers.MainNavigationHandler
+import com.saba21.demo.movies.main.activity.handlers.MainUtilitiesHandler
 import com.saba21.demo.movies.presentation.movieDetails.MovieDetailsActions
 import com.saba21.demo.movies.presentation.movieList.MovieListActions
 import com.saba21.demo.movies.presentation.splash.SplashActions
-import io.reactivex.subjects.PublishSubject
 
-class MainViewModel : ViewModel(),
+class MainViewModel(
+    private val navigationHandler: MainNavigationHandler,
+    private val utilityHandler: MainUtilitiesHandler
+) : ViewModel(),
     NavigationHandler,
     ErrorHandler {
-
-    val mainViewState = PublishSubject.create<MainViewState>()
 
     override fun handleNavigation(navigation: BaseNavigation) {
         when (navigation) {
             is SplashActions.Navigation.GoToMainScreen ->
-                mainViewState.onNext(MainViewState.Navigation.GoToMovieList)
+                navigationHandler.goToMovieList()
             is MovieListActions.Navigation.GoToDetails ->
-                mainViewState.onNext(MainViewState.Navigation.GoToMovieDetails(navigation.movieItem))
+                navigationHandler.goToMovieDetails(navigation.movieItem)
             is MovieDetailsActions.Navigation.GoBack ->
-                mainViewState.onNext(MainViewState.Navigation.GoBack)
+                navigationHandler.onBackPressed()
         }
     }
 
     override fun handleError(error: BaseError) {
         when (error) {
             is CommonErrors -> {
-                mainViewState.onNext(MainViewState.Error.CommonError(error))
+                utilityHandler.showAlert(error.messageRes)
             }
         }
     }

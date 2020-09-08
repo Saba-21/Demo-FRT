@@ -6,7 +6,8 @@ import com.saba21.demo.movies.base.di.scopes.ActivityScope
 import com.saba21.demo.movies.base.presentation.errorHandling.ErrorHandler
 import com.saba21.demo.movies.base.presentation.navigationHandling.NavigationHandler
 import com.saba21.demo.movies.main.activity.MainViewModel
-import com.saba21.demo.movies.main.activity.util.MainViewModelFactory
+import com.saba21.demo.movies.main.activity.handlers.MainNavigationHandler
+import com.saba21.demo.movies.main.activity.handlers.MainUtilitiesHandler
 import dagger.Module
 import dagger.Provides
 
@@ -15,9 +16,28 @@ class ActivityModule {
 
     @Provides
     @ActivityScope
-    fun provideViewModelStore(activity: AppCompatActivity): MainViewModel {
+    fun provideMainNavigationHandler(activity: AppCompatActivity): MainNavigationHandler {
+        return MainNavigationHandler(
+            activity.supportFragmentManager
+        )
+    }
+
+    @Provides
+    @ActivityScope
+    fun provideMainUtilityHandler(activity: AppCompatActivity): MainUtilitiesHandler {
+        return MainUtilitiesHandler(
+            activity
+        )
+    }
+
+    @Provides
+    @ActivityScope
+    fun provideViewModel(
+        activity: AppCompatActivity,
+        viewModelFactory: MainViewModelFactory
+    ): MainViewModel {
         return activity.viewModels<MainViewModel> {
-            MainViewModelFactory()
+            viewModelFactory
         }.value
     }
 
