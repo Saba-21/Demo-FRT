@@ -9,6 +9,7 @@ import com.saba21.demo.movies.base.presentation.state.BaseViewState
 import com.saba21.demo.movies.base.presentation.state.BaseViewStateData
 import com.saba21.demo.movies.base.viewModel.BaseViewModel
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import kotlin.reflect.KClass
 
@@ -21,6 +22,10 @@ abstract class BaseMVIFragment<Action : BaseAction, ViewState : BaseViewState<ou
 
     private val compositeDisposable = CompositeDisposable()
 
+    private fun Disposable.addDisposable() {
+        compositeDisposable.add(this)
+    }
+
     protected fun postAction(action: Action) {
         viewActionSubject.onNext(action)
     }
@@ -30,23 +35,19 @@ abstract class BaseMVIFragment<Action : BaseAction, ViewState : BaseViewState<ou
         if (!viewActionSubject.hasObservers())
             viewModel.onSubscribeViewAction(viewActionSubject)
         if (!viewModel.viewStateSubject.hasObservers())
-            compositeDisposable.add(
-                viewModel.viewStateSubject
-                    .filter {
-                        view != null
-                    }.subscribe {
-                        reflectState(it)
-                    }
-            )
+            viewModel.viewStateSubject
+                .filter {
+                    view != null
+                }.subscribe {
+                    reflectState(it)
+                }.addDisposable()
         if (!viewModel.viewStateRestoreSubject.hasObservers())
-            compositeDisposable.add(
-                viewModel.viewStateRestoreSubject
-                    .filter {
-                        view != null
-                    }.subscribe {
-                        onDraw(requireView(), it)
-                    }
-            )
+            viewModel.viewStateRestoreSubject
+                .filter {
+                    view != null
+                }.subscribe {
+                    onDraw(requireView(), it)
+                }.addDisposable()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
