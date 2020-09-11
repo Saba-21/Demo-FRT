@@ -1,4 +1,4 @@
-package com.saba21.demo.movies.base.presentation.errorHandling
+package com.saba21.demo.movies.base.presentation.abstractHandlers.error
 
 import androidx.annotation.StringRes
 import com.saba21.demo.movies.R

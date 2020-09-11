@@ -9,4 +9,12 @@ class MainAlertHandler(private val context: Context) {
         AlertDialog.Builder(context).setMessage(messageRes).show()
     }
 
+    fun showAlertForResult(messageRes: Int, positiveClick: () -> Unit) {
+        AlertDialog.Builder(context).setMessage(messageRes).setPositiveButton(
+            android.R.string.ok
+        ) { _, _ ->
+            positiveClick()
+        }.show()
+    }
+
 }

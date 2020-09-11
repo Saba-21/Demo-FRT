@@ -1,7 +1,7 @@
 package com.saba21.demo.movies.presentation.movieDetails
 
 import com.saba21.demo.movies.base.presentation.action.BaseAction
-import com.saba21.demo.movies.base.presentation.navigationHandling.BaseNavigation
+import com.saba21.demo.movies.base.presentation.abstractHandlers.navigation.BaseNavigation
 
 sealed class MovieDetailsActions : BaseAction {
 

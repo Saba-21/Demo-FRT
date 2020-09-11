@@ -1,24 +1,18 @@
 package com.saba21.demo.movies.base.viewModel
 
-import androidx.lifecycle.ViewModel
+import com.saba21.demo.movies.base.presentation.abstractHandlers.alert.BaseAlert
+import com.saba21.demo.movies.base.presentation.abstractHandlers.error.BaseError
+import com.saba21.demo.movies.base.presentation.abstractHandlers.error.CommonErrors
+import com.saba21.demo.movies.base.presentation.abstractHandlers.loader.BaseLoader
+import com.saba21.demo.movies.base.presentation.abstractHandlers.navigation.BaseNavigation
 import com.saba21.demo.movies.base.presentation.action.BaseAction
-import com.saba21.demo.movies.base.presentation.errorHandling.BaseError
-import com.saba21.demo.movies.base.presentation.errorHandling.CommonErrors
-import com.saba21.demo.movies.base.presentation.errorHandling.IntermediaryErrorHandler
-import com.saba21.demo.movies.base.presentation.navigationHandling.BaseNavigation
-import com.saba21.demo.movies.base.presentation.navigationHandling.IntermediaryNavigationHandler
 import com.saba21.demo.movies.base.presentation.state.BaseViewState
 import com.saba21.demo.movies.base.presentation.state.BaseViewStateData
-import com.saba21.demo.movies.base.presentation.utilityHandling.BaseLoader
-import com.saba21.demo.movies.base.presentation.utilityHandling.IntermediaryUtilityHandler
 import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
 
 abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<out BaseViewStateData>> :
-    ViewModel() {
+    BaseUtilViewModel() {
 
     abstract val initialViewState: ViewState
 
@@ -29,17 +23,6 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
     val viewStateRestoreSubject = PublishSubject.create<ViewState>()
 
     private val actionSubject = PublishSubject.create<ViewAction>()
-
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-
-    @Inject
-    lateinit var intermediaryErrorHandler: IntermediaryErrorHandler
-
-    @Inject
-    lateinit var intermediaryNavigationHandler: IntermediaryNavigationHandler
-
-    @Inject
-    lateinit var intermediaryUtilityHandler: IntermediaryUtilityHandler
 
     fun initializeViewState(): Boolean {
         val isInitial = !::currentViewState.isInitialized
@@ -52,10 +35,6 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
 
     open fun onBindView(initial: Boolean) {
 
-    }
-
-    protected fun Disposable.addSubscription() {
-        compositeDisposable.add(this)
     }
 
     protected fun postAction(action: ViewAction) {
@@ -87,7 +66,14 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
                 Observable.empty<ViewState>()
             }
             is BaseLoader -> {
-                intermediaryUtilityHandler.handleLoader(viewAction)
+                intermediaryLoaderHandler.handleLoader(viewAction)
+                Observable.empty<ViewState>()
+            }
+            is BaseAlert<*> -> {
+                intermediaryAlertHandler.handleAlert(viewAction) {
+                    @Suppress("UNCHECKED_CAST")
+                    postAction(it as ViewAction)
+                }
                 Observable.empty<ViewState>()
             }
             else -> onActionReceived(viewAction)
@@ -100,12 +86,6 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
 
     protected open fun onActionReceived(action: ViewAction): Observable<ViewState> {
         return Observable.empty<ViewState>()
-    }
-
-    override fun onCleared() {
-        compositeDisposable.dispose()
-        compositeDisposable.clear()
-        super.onCleared()
     }
 
 }

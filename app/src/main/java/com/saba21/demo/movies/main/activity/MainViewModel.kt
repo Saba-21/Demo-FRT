@@ -1,13 +1,15 @@
 package com.saba21.demo.movies.main.activity
 
 import androidx.lifecycle.ViewModel
-import com.saba21.demo.movies.base.presentation.errorHandling.BaseError
-import com.saba21.demo.movies.base.presentation.errorHandling.CommonErrors
-import com.saba21.demo.movies.base.presentation.errorHandling.IntermediaryErrorHandler
-import com.saba21.demo.movies.base.presentation.navigationHandling.BaseNavigation
-import com.saba21.demo.movies.base.presentation.navigationHandling.IntermediaryNavigationHandler
-import com.saba21.demo.movies.base.presentation.utilityHandling.BaseLoader
-import com.saba21.demo.movies.base.presentation.utilityHandling.IntermediaryUtilityHandler
+import com.saba21.demo.movies.base.presentation.abstractHandlers.alert.BaseAlert
+import com.saba21.demo.movies.base.presentation.abstractHandlers.alert.IntermediaryAlertHandler
+import com.saba21.demo.movies.base.presentation.abstractHandlers.error.BaseError
+import com.saba21.demo.movies.base.presentation.abstractHandlers.error.CommonErrors
+import com.saba21.demo.movies.base.presentation.abstractHandlers.error.IntermediaryErrorHandler
+import com.saba21.demo.movies.base.presentation.abstractHandlers.loader.BaseLoader
+import com.saba21.demo.movies.base.presentation.abstractHandlers.loader.IntermediaryLoaderHandler
+import com.saba21.demo.movies.base.presentation.abstractHandlers.navigation.BaseNavigation
+import com.saba21.demo.movies.base.presentation.abstractHandlers.navigation.IntermediaryNavigationHandler
 import com.saba21.demo.movies.main.activity.handlers.MainAlertHandler
 import com.saba21.demo.movies.main.activity.handlers.MainLoaderHandler
 import com.saba21.demo.movies.main.activity.handlers.MainNavigationHandler
@@ -21,7 +23,8 @@ class MainViewModel(
 ) : ViewModel(),
     IntermediaryNavigationHandler,
     IntermediaryErrorHandler,
-    IntermediaryUtilityHandler {
+    IntermediaryLoaderHandler,
+    IntermediaryAlertHandler {
 
     override fun handleNavigation(navigation: BaseNavigation) {
         when (navigation) {
@@ -45,6 +48,12 @@ class MainViewModel(
             mainLoaderHandler.showLoader()
         else
             mainLoaderHandler.hideLoader()
+    }
+
+    override fun <T> handleAlert(item: BaseAlert<T>, callback: (T) -> Unit) {
+        alertHandler.showAlertForResult(android.R.string.untitled) {
+            callback.invoke(item.nextAction)
+        }
     }
 
 }
