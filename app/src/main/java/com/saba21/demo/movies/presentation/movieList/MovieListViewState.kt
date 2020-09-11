@@ -10,40 +10,14 @@ sealed class MovieListViewState(
 
     object Initial : MovieListViewState()
 
-    class DrawPopularMovies(
-        val pageIndex: Int,
-        val movies: List<MovieModel>
-    ) : MovieListViewState(stateReducer = {
-        it.copy(
-            popularMoviesPageIndex = pageIndex,
-            popularMovies = movies
-        )
-    })
-
     class DrawTopRatedMovies(
-        val pageIndex: Int,
         val movies: List<MovieModel>
     ) : MovieListViewState(stateReducer = {
-        it.copy(
-            topRatedMoviesPageIndex = pageIndex,
-            topRatedMovies = movies
-        )
-    })
-
-    class DrawFavoriteMovies(
-        val movies: List<MovieModel>
-    ) : MovieListViewState(stateReducer = {
-        it.copy(
-            favoriteMovies = movies
-        )
+        it.copy(topRatedMovies = movies)
     })
 
     data class MovieListViewData(
-        val topRatedMoviesPageIndex: Int? = null,
-        val popularMoviesPageIndex: Int? = null,
-        val topRatedMovies: List<MovieModel>? = null,
-        val popularMovies: List<MovieModel>? = null,
-        val favoriteMovies: List<MovieModel>? = null
+        val topRatedMovies: List<MovieModel>? = null
     ) : BaseViewStateData()
 
 }

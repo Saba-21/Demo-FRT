@@ -10,10 +10,6 @@ sealed class MovieListActions : BaseAction {
         class GoToDetails(val movieItem: MovieModel) : Navigation()
     }
 
-    class LoadTopRatedMoviesPage(val page: Int) : MovieListActions()
-
-    class LoadPopularMoviesPage(val page: Int) : MovieListActions()
-
-    object LoadFavoriteMoviesPage : MovieListActions()
+    object LoadTopRatedMoviesPage : MovieListActions()
 
 }

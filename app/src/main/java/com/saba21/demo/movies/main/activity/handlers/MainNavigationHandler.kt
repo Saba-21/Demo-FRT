@@ -23,14 +23,8 @@ class MainNavigationHandler(private val fragmentManager: FragmentManager) {
                     arguments =
                         bundleOf(MOVIE_DETAILS_PARAMS_KEY to MovieDetailsParams(movieModel))
                 }
-            add(R.id.vFragmentContainer, fragment)
+            replace(R.id.vFragmentContainer, fragment)
             addToBackStack(null)
-        }
-    }
-
-    fun goToMovieList() {
-        fragmentManager.commit(true) {
-            replace(R.id.vFragmentContainer, MovieListFragment())
         }
     }
 

@@ -20,17 +20,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tbMovies"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintTop_toBottomOf="@id/tvToolbarTitle" />
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vpMovies"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMovies"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tbMovies" />
+        app:layout_constraintTop_toBottomOf="@id/tvToolbarTitle" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

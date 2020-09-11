@@ -13,7 +13,6 @@ import com.saba21.demo.movies.main.activity.handlers.MainLoaderHandler
 import com.saba21.demo.movies.main.activity.handlers.MainNavigationHandler
 import com.saba21.demo.movies.presentation.movieDetails.MovieDetailsActions
 import com.saba21.demo.movies.presentation.movieList.MovieListActions
-import com.saba21.demo.movies.presentation.splash.SplashActions
 
 class MainViewModel(
     private val navigationHandler: MainNavigationHandler,
@@ -26,8 +25,6 @@ class MainViewModel(
 
     override fun handleNavigation(navigation: BaseNavigation) {
         when (navigation) {
-            is SplashActions.Navigation.GoToMainScreen ->
-                navigationHandler.goToMovieList()
             is MovieListActions.Navigation.GoToDetails ->
                 navigationHandler.goToMovieDetails(navigation.movieItem)
             is MovieDetailsActions.Navigation.GoBack ->

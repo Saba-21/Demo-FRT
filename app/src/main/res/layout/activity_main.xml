@@ -7,7 +7,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/vFragmentContainer"
-        android:name="com.saba21.demo.movies.presentation.splash.SplashFragment"
+        android:name="com.saba21.demo.movies.presentation.movieList.MovieListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
