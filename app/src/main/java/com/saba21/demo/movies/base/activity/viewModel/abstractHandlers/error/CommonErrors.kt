@@ -1,4 +1,4 @@
-package com.saba21.demo.movies.base.presentation.abstractHandlers.error
+package com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error
 
 import androidx.annotation.StringRes
 import com.saba21.demo.movies.R

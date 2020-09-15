@@ -1,4 +1,4 @@
-package com.saba21.demo.movies.base.presentation.abstractHandlers.loader
+package com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.loader
 
 interface IntermediaryLoaderHandler {
 

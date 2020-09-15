@@ -1,4 +1,4 @@
-package com.saba21.demo.movies.base.presentation.abstractHandlers.navigation
+package com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.navigation
 
 import com.saba21.demo.movies.base.presentation.action.BaseAction
 

@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.createViewModelLazy
 import androidx.lifecycle.ViewModel
 import com.saba21.demo.movies.base.di.BaseFragmentComponent
-import com.saba21.demo.movies.base.viewModel.BaseViewModel
-import com.saba21.demo.movies.base.viewModel.BaseViewModelFactory
+import com.saba21.demo.movies.base.fragment.viewModel.BaseViewModel
+import com.saba21.demo.movies.base.fragment.viewModel.BaseViewModelFactory
 import com.saba21.demo.movies.main.activity.MainActivity
 import com.saba21.demo.movies.main.activity.di.ActivityComponent
 import dagger.Lazy

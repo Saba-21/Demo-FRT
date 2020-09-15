@@ -1,7 +1,7 @@
 package com.saba21.demo.movies.presentation.movieList
 
 import com.saba21.demo.domain.useCase.GetTopRatedMoviesUseCase
-import com.saba21.demo.movies.base.viewModel.BaseViewModel
+import com.saba21.demo.movies.base.fragment.viewModel.BaseViewModel
 import io.reactivex.Observable
 import javax.inject.Inject
 

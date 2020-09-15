@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movie Catalog</string>
+    <string name="app_name">Movie</string>
 
     <string name="tab_title_popular">Popular</string>
     <string name="tab_title_top_rated">Top Rated</string>

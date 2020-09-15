@@ -1,4 +1,4 @@
-package com.saba21.demo.movies.base.presentation.abstractHandlers.alert
+package com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.alert
 
 interface IntermediaryAlertHandler {
 

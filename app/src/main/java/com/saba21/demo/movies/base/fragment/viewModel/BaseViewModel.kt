@@ -1,10 +1,10 @@
-package com.saba21.demo.movies.base.viewModel
+package com.saba21.demo.movies.base.fragment.viewModel
 
-import com.saba21.demo.movies.base.presentation.abstractHandlers.alert.BaseAlert
-import com.saba21.demo.movies.base.presentation.abstractHandlers.error.BaseError
-import com.saba21.demo.movies.base.presentation.abstractHandlers.error.CommonErrors
-import com.saba21.demo.movies.base.presentation.abstractHandlers.loader.BaseLoader
-import com.saba21.demo.movies.base.presentation.abstractHandlers.navigation.BaseNavigation
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.alert.BaseAlert
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error.BaseError
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error.CommonErrors
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.loader.BaseLoader
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.navigation.BaseNavigation
 import com.saba21.demo.movies.base.presentation.action.BaseAction
 import com.saba21.demo.movies.base.presentation.state.BaseViewState
 import com.saba21.demo.movies.base.presentation.state.BaseViewStateData

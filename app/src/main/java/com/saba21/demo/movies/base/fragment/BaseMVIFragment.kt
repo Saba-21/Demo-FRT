@@ -7,7 +7,7 @@ import androidx.annotation.LayoutRes
 import com.saba21.demo.movies.base.presentation.action.BaseAction
 import com.saba21.demo.movies.base.presentation.state.BaseViewState
 import com.saba21.demo.movies.base.presentation.state.BaseViewStateData
-import com.saba21.demo.movies.base.viewModel.BaseViewModel
+import com.saba21.demo.movies.base.fragment.viewModel.BaseViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
