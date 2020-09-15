@@ -16,11 +16,7 @@ abstract class BaseActivity(@LayoutRes layoutRes: Int) : AppCompatActivity(layou
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         component.inject(this)
-        viewModel = viewModels<MainViewModel> {
-            viewModelFactory
-        }.value.apply {
-            bindView(this@BaseActivity)
-        }
+        viewModel.bindView(this)
     }
 
     private val component: ActivityComponent by lazy {
@@ -31,7 +27,11 @@ abstract class BaseActivity(@LayoutRes layoutRes: Int) : AppCompatActivity(layou
 
     val activityComponent: ActivityComponent get() = component
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by lazy {
+        viewModels<MainViewModel> {
+            viewModelFactory
+        }.value
+    }
 
     @Inject
     lateinit var viewModelFactory: MainViewModelFactory
