@@ -5,6 +5,7 @@ import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.alert.Int
 import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error.IntermediaryErrorHandler
 import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.loader.IntermediaryLoaderHandler
 import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.navigation.IntermediaryNavigationHandler
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.permission.IntermediaryPermissionHandler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -22,6 +23,9 @@ open class BaseUtilViewModel : ViewModel() {
 
     @Inject
     lateinit var intermediaryAlertHandler: IntermediaryAlertHandler
+
+    @Inject
+    lateinit var intermediaryPermissionHandler: IntermediaryPermissionHandler
 
     protected val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
