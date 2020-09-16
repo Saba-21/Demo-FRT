@@ -1,10 +1,12 @@
 package com.saba21.demo.movies.presentation.movieList
 
 import com.saba21.demo.domain.useCase.GetTopRatedMoviesUseCase
+import com.saba21.demo.movies.base.di.scopes.FragmentScope
 import com.saba21.demo.movies.base.fragment.viewModel.BaseViewModel
 import io.reactivex.Observable
 import javax.inject.Inject
 
+@FragmentScope
 class MovieListViewModel
 @Inject constructor(
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase

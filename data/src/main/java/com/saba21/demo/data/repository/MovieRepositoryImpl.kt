@@ -8,7 +8,9 @@ import com.saba21.demo.domain.models.MovieModel
 import com.saba21.demo.domain.repository.MovieRepository
 import io.reactivex.Observable
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class MovieRepositoryImpl @Inject constructor(
     private val movieService: MovieService,
     private val movieDatabase: MovieDatabase,
