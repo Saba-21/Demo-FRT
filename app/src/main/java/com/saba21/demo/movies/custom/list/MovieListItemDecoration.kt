@@ -1,4 +1,4 @@
-package com.saba21.demo.movies.presentation.movieList.util
+package com.saba21.demo.movies.custom.list
 
 import android.content.Context
 import android.graphics.Rect

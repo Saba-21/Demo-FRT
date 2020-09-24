@@ -2,8 +2,6 @@ package com.saba21.demo.movies.presentation.movieDetails.di
 
 import com.saba21.demo.movies.base.di.scopes.FragmentScope
 import com.saba21.demo.movies.presentation.movieDetails.MovieDetailsFragment
-import com.saba21.demo.movies.presentation.movieDetails.util.MOVIE_DETAILS_PARAMS_KEY
-import com.saba21.demo.movies.presentation.movieDetails.util.MovieDetailsParams
 import dagger.Module
 import dagger.Provides
 

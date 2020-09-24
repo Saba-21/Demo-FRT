@@ -4,7 +4,7 @@ import com.saba21.demo.domain.useCase.CheckFavoriteMoviesUseCase
 import com.saba21.demo.domain.useCase.SaveFavoriteMoviesUseCase
 import com.saba21.demo.movies.base.di.scopes.FragmentScope
 import com.saba21.demo.movies.base.fragment.viewModel.BaseViewModel
-import com.saba21.demo.movies.presentation.movieDetails.util.MovieDetailsParams
+import com.saba21.demo.movies.presentation.movieDetails.di.MovieDetailsParams
 import io.reactivex.Observable
 import javax.inject.Inject
 

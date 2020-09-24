@@ -9,8 +9,8 @@ import com.saba21.demo.movies.R
 import com.saba21.demo.movies.base.activity.BaseActivity
 import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.permission.CommonPermissions
 import com.saba21.demo.movies.presentation.movieDetails.MovieDetailsFragment
-import com.saba21.demo.movies.presentation.movieDetails.util.MOVIE_DETAILS_PARAMS_KEY
-import com.saba21.demo.movies.presentation.movieDetails.util.MovieDetailsParams
+import com.saba21.demo.movies.presentation.movieDetails.di.MOVIE_DETAILS_PARAMS_KEY
+import com.saba21.demo.movies.presentation.movieDetails.di.MovieDetailsParams
 
 class MainActivity : BaseActivity(R.layout.activity_main) {
 
