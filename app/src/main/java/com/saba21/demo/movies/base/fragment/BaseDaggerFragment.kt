@@ -1,7 +1,6 @@
 package com.saba21.demo.movies.base.fragment
 
 import android.content.Context
-import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.createViewModelLazy
 import androidx.lifecycle.ViewModel
@@ -14,10 +13,9 @@ import dagger.Lazy
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-abstract class BaseDaggerFragment<VM : BaseViewModel<*, *>>(
-    @LayoutRes layoutRes: Int,
-    viewModelClass: KClass<out ViewModel>
-) : Fragment(layoutRes) {
+abstract class BaseDaggerFragment<VM : BaseViewModel<*, *>> : Fragment() {
+
+    abstract val viewModelClass: KClass<out ViewModel>
 
     protected abstract fun getComponent(activityComponent: ActivityComponent):
             BaseFragmentComponent<out BaseDaggerFragment<VM>>

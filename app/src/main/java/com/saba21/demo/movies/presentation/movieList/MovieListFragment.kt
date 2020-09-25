@@ -5,16 +5,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.saba21.demo.domain.models.MovieModel
 import com.saba21.demo.movies.R
 import com.saba21.demo.movies.base.fragment.BaseFragment
-import com.saba21.demo.movies.main.activity.di.ActivityComponent
-import com.saba21.demo.movies.presentation.movieList.di.MovieListComponent
 import com.saba21.demo.movies.custom.list.MovieListAdapter
 import com.saba21.demo.movies.custom.list.MovieListItemDecoration
+import com.saba21.demo.movies.main.activity.di.ActivityComponent
+import com.saba21.demo.movies.presentation.movieList.di.MovieListComponent
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 
-class MovieListFragment : BaseFragment<MovieListActions, MovieListViewState, MovieListViewModel>(
-    R.layout.fragment_movie_list,
-    MovieListViewModel::class
-) {
+class MovieListFragment :
+    BaseFragment<MovieListActions, MovieListViewState, MovieListViewModel>() {
+
+    override val layoutRes = R.layout.fragment_movie_list
+    override val viewModelClass = MovieListViewModel::class
 
     private lateinit var favoritesAdapter: MovieListAdapter
 

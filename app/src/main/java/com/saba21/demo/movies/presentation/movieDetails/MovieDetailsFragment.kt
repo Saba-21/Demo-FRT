@@ -13,10 +13,11 @@ import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.fragment_movie_details.*
 
 class MovieDetailsFragment :
-    BaseFragment<MovieDetailsActions, MovieDetailsViewState, MovieDetailsViewModel>(
-        R.layout.fragment_movie_details,
-        MovieDetailsViewModel::class
-    ) {
+    BaseFragment<MovieDetailsActions, MovieDetailsViewState, MovieDetailsViewModel>() {
+
+    override val layoutRes = R.layout.fragment_movie_details
+
+    override val viewModelClass = MovieDetailsViewModel::class
 
     override fun getComponent(activityComponent: ActivityComponent): MovieDetailsComponent {
         return activityComponent.getMovieDetailsComponentFactory().create(this)

@@ -3,20 +3,16 @@ package com.saba21.demo.movies.base.fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.LayoutRes
+import com.saba21.demo.movies.base.fragment.viewModel.BaseViewModel
 import com.saba21.demo.movies.base.presentation.action.BaseAction
 import com.saba21.demo.movies.base.presentation.state.BaseViewState
 import com.saba21.demo.movies.base.presentation.state.BaseViewStateData
-import com.saba21.demo.movies.base.fragment.viewModel.BaseViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
-import kotlin.reflect.KClass
 
-abstract class BaseMVIFragment<Action : BaseAction, ViewState : BaseViewState<out BaseViewStateData>, ViewModel : BaseViewModel<Action, ViewState>>(
-    @LayoutRes layoutRes: Int,
-    viewModelClass: KClass<out ViewModel>
-) : BaseDaggerFragment<ViewModel>(layoutRes, viewModelClass) {
+abstract class BaseMVIFragment<Action : BaseAction, ViewState : BaseViewState<out BaseViewStateData>, ViewModel : BaseViewModel<Action, ViewState>> :
+    BaseDaggerFragment<ViewModel>() {
 
     private val viewActionSubject: PublishSubject<Action> = PublishSubject.create()
 
