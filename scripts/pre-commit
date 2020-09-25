@@ -1,5 +1,11 @@
 #!/bin/sh
+
 echo "***************************"
 echo "Running git pre-commit hook"
 echo "***************************"
-exit 1
+
+./gradlew ktlintFormat
+
+[ $RESULT -ne 0 ] && exit 1
+
+exit 0
