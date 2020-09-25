@@ -19,5 +19,4 @@ sealed class MovieListViewState(
     data class MovieListViewData(
         val topRatedMovies: List<MovieModel>? = null
     ) : BaseViewStateData()
-
 }

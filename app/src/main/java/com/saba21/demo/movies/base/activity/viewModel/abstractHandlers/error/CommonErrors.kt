@@ -2,9 +2,9 @@ package com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error
 
 import androidx.annotation.StringRes
 import com.saba21.demo.movies.R
-import retrofit2.HttpException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import retrofit2.HttpException
 
 enum class CommonErrors(@StringRes val messageRes: Int) : BaseError {
     FAIL(R.string.error_message_general),
@@ -22,5 +22,4 @@ enum class CommonErrors(@StringRes val messageRes: Int) : BaseError {
             }
         }
     }
-
 }

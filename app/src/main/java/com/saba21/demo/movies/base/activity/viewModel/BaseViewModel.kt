@@ -31,5 +31,4 @@ abstract class BaseViewModel : ViewModel(),
             callback.invoke(this)
         }
     }
-
 }

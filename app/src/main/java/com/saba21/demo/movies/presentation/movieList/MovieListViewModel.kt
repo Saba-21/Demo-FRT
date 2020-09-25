@@ -30,5 +30,4 @@ class MovieListViewModel
             else -> super.onActionReceived(action)
         }
     }
-
 }

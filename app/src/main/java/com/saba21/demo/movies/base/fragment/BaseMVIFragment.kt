@@ -55,11 +55,9 @@ abstract class BaseMVIFragment<Action : BaseAction, ViewState : BaseViewState<ou
     }
 
     open fun reflectState(state: ViewState) {
-
     }
 
     open fun onDraw(view: View, lastState: ViewState?) {
-
     }
 
     override fun onDestroy() {
@@ -67,5 +65,4 @@ abstract class BaseMVIFragment<Action : BaseAction, ViewState : BaseViewState<ou
         compositeDisposable.clear()
         super.onDestroy()
     }
-
 }

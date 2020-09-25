@@ -16,5 +16,4 @@ interface ActivityComponent : FragmentSubComponentProvider {
     }
 
     fun inject(activity: BaseActivity)
-
 }

@@ -12,5 +12,4 @@ interface MainHandler {
     fun hideLoader()
     fun goToMovieDetails(movieModel: MovieModel)
     fun popBackStack()
-
 }

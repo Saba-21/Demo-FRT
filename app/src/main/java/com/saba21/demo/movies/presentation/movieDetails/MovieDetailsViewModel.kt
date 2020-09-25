@@ -35,5 +35,4 @@ class MovieDetailsViewModel @Inject constructor(
             else -> super.onActionReceived(action)
         }
     }
-
 }

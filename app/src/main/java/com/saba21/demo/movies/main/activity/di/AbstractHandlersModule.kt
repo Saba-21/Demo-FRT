@@ -37,5 +37,4 @@ class AbstractHandlersModule {
     @ActivityScope
     fun providePermissionHandler(mainViewModel: MainViewModel):
             IntermediaryPermissionHandler = mainViewModel
-
 }

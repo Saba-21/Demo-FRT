@@ -44,5 +44,4 @@ abstract class BaseDaggerFragment<VM : BaseViewModel<*, *>> : Fragment() {
     }
 
     protected val viewModel: VM get() = mViewModel
-
 }

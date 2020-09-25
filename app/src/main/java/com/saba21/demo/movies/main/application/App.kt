@@ -18,5 +18,4 @@ class App : Application() {
         super.onCreate()
         component.inject(this)
     }
-
 }

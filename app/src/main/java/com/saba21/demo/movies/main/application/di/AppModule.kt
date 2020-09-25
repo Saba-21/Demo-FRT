@@ -39,6 +39,4 @@ class AppModule {
     fun providePosterAddress(appContext: Context): String {
         return appContext.getString(R.string.poster_address)
     }
-
-
 }

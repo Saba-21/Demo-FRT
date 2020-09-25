@@ -8,5 +8,4 @@ interface FragmentSubComponentProvider {
     fun getMovieDetailsComponentFactory(): MovieDetailsComponent.Factory
 
     fun getMovieListComponentFactory(): MovieListComponent.Factory
-
 }

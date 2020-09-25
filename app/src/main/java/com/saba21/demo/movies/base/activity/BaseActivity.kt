@@ -40,5 +40,4 @@ abstract class BaseActivity(@LayoutRes layoutRes: Int) : AppCompatActivity(layou
         viewModel.unbindView()
         super.onDestroy()
     }
-
 }

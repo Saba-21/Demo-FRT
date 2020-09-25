@@ -74,5 +74,4 @@ class MovieDetailsFragment :
             .transform(CenterCrop(), RoundedCorners(24))
             .into(ivDetailsPoster)
     }
-
 }

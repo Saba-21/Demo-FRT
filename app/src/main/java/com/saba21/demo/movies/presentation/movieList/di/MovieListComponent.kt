@@ -17,5 +17,4 @@ interface MovieListComponent : BaseFragmentComponent<MovieListFragment> {
     }
 
     override fun inject(fragment: MovieListFragment)
-
 }

@@ -14,5 +14,4 @@ class MovieDetailsModule {
         return fragment.requireArguments()
             .getSerializable(MOVIE_DETAILS_PARAMS_KEY) as MovieDetailsParams
     }
-
 }

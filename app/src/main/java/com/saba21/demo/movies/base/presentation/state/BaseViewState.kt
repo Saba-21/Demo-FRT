@@ -10,5 +10,4 @@ abstract class BaseViewState<Data : BaseViewStateData>(initialState: Data) {
     }
 
     protected abstract val stateReducer: ((Data) -> Data)
-
 }

@@ -77,5 +77,4 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     override fun popBackStack() {
         onBackPressed()
     }
-
 }

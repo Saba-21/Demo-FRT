@@ -32,6 +32,5 @@ class MovieListItemDecoration(val context: Context) : DividerItemDecoration(cont
             outRect.left = context.resources.getDimensionPixelOffset(R.dimen.movie_item_divider_size) / 4
             outRect.right = context.resources.getDimensionPixelOffset(R.dimen.movie_item_divider_size) / 2
         }
-
     }
 }

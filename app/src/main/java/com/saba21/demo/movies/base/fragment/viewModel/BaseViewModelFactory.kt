@@ -16,5 +16,4 @@ class BaseViewModelFactory<VM : BaseViewModel<*, *>>
         @Suppress("UNCHECKED_CAST")
         return viewModel.get() as T
     }
-
 }

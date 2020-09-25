@@ -5,5 +5,4 @@ import com.saba21.demo.movies.base.fragment.BaseDaggerFragment
 interface BaseFragmentComponent<A : BaseDaggerFragment<*>> {
 
     fun inject(fragment: A)
-
 }

@@ -24,5 +24,4 @@ sealed class MovieDetailsViewState(
         val movieModel: MovieModel? = null,
         val isFavorite: Boolean? = null
     ) : BaseViewStateData()
-
 }

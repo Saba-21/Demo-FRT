@@ -59,5 +59,4 @@ class MovieListFragment :
             adapter = favoritesAdapter
         }
     }
-
 }

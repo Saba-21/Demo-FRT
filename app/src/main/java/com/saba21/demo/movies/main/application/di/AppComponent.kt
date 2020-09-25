@@ -15,11 +15,9 @@ interface AppComponent {
     interface Factory {
 
         fun create(@BindsInstance app: Application): AppComponent
-
     }
 
     fun inject(app: App)
 
     fun getActivityComponentFactory(): ActivityComponent.Factory
-
 }
