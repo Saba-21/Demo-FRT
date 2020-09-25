@@ -12,28 +12,3 @@ sealed class MovieListActions : BaseAction {
 
     object LoadTopRatedMoviesPage : MovieListActions()
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
