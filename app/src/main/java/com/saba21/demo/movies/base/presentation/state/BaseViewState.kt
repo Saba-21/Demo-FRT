@@ -9,5 +9,5 @@ abstract class BaseViewState<Data : BaseViewStateData>(initialState: Data) {
         this.currentState = stateReducer(newViewState.currentState as Data)
     }
 
-    protected abstract val stateReducer: ((Data) -> Data)
+    protected open fun stateReducer(previousData: Data): Data = previousData
 }

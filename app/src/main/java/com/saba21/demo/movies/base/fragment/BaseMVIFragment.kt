@@ -30,15 +30,15 @@ abstract class BaseMVIFragment<Action : BaseAction, ViewState : BaseViewState<ou
         super.onAttach(context)
         if (!viewActionSubject.hasObservers())
             viewModel.onSubscribeViewAction(viewActionSubject)
-        if (!viewModel.viewStateSubject.hasObservers())
-            viewModel.viewStateSubject
+        if (!viewModel.stateSubject.hasObservers())
+            viewModel.stateSubject
                 .filter {
                     view != null
                 }.subscribe {
                     reflectState(it)
                 }.addDisposable()
-        if (!viewModel.viewStateRestoreSubject.hasObservers())
-            viewModel.viewStateRestoreSubject
+        if (!viewModel.restoreStateSubject.hasObservers())
+            viewModel.restoreStateSubject
                 .filter {
                     view != null
                 }.subscribe {

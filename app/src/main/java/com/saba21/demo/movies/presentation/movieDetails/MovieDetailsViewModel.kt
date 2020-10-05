@@ -15,8 +15,6 @@ class MovieDetailsViewModel @Inject constructor(
     private val checkFavoriteMoviesUseCase: CheckFavoriteMoviesUseCase
 ) : BaseViewModel<MovieDetailsActions, MovieDetailsViewState>() {
 
-    override val initialViewState: MovieDetailsViewState = MovieDetailsViewState.Initial
-
     override fun onBindView(initial: Boolean) {
         postState(MovieDetailsViewState.DrawMovieDetails(parameters.movieModel))
         postAction(MovieDetailsActions.CheckFavorite)

@@ -15,36 +15,31 @@ import io.reactivex.subjects.PublishSubject
 abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<out BaseViewStateData>> :
     BaseUtilViewModel() {
 
-    abstract val initialViewState: ViewState
+    private var currentViewState: ViewState? = null
 
-    private lateinit var currentViewState: ViewState
+    val stateSubject = PublishSubject.create<ViewState>()
 
-    val viewStateSubject = PublishSubject.create<ViewState>()
-
-    val viewStateRestoreSubject = PublishSubject.create<ViewState>()
+    val restoreStateSubject = PublishSubject.create<ViewState>()
 
     private val actionSubject = PublishSubject.create<ViewAction>()
 
     fun initializeViewState(): Boolean {
-        val isInitial = !::currentViewState.isInitialized
-        if (isInitial)
-            currentViewState = initialViewState
-        else
-            viewStateRestoreSubject.onNext(currentViewState)
-        return isInitial
+        val isInitialized = currentViewState != null
+        if (isInitialized)
+            restoreStateSubject.onNext(currentViewState!!)
+        return !isInitialized
     }
 
-    open fun onBindView(initial: Boolean) {
-    }
+    open fun onBindView(initial: Boolean) {}
 
     protected fun postAction(action: ViewAction) {
         actionSubject.onNext(action)
     }
 
+    @Suppress("UNCHECKED_CAST")
     protected fun postState(state: ViewState) {
-        @Suppress("UNCHECKED_CAST")
-        currentViewState = state.updateCurrentState(currentViewState) as ViewState
-        viewStateSubject.onNext(state)
+        currentViewState = state.updateCurrentState(currentViewState ?: state) as ViewState
+        stateSubject.onNext(state)
     }
 
     fun onSubscribeViewAction(subject: Observable<ViewAction>) {
@@ -55,6 +50,7 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
         )
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun processAction(viewAction: ViewAction): Observable<ViewState> {
         return when (viewAction) {
             is BaseError -> {
@@ -71,14 +67,12 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
             }
             is BaseAlert<*> -> {
                 intermediaryAlertHandler.handleAlert(viewAction) {
-                    @Suppress("UNCHECKED_CAST")
                     postAction(it as ViewAction)
                 }
                 Observable.empty<ViewState>()
             }
             is BasePermission<*> -> {
                 intermediaryPermissionHandler.handlePermission(viewAction) {
-                    @Suppress("UNCHECKED_CAST")
                     postAction(it as ViewAction)
                 }
                 Observable.empty<ViewState>()
@@ -94,4 +88,5 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
     protected open fun onActionReceived(action: ViewAction): Observable<ViewState> {
         return Observable.empty<ViewState>()
     }
+
 }

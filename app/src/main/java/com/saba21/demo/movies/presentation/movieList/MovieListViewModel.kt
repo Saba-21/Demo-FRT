@@ -12,8 +12,6 @@ class MovieListViewModel
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase
 ) : BaseViewModel<MovieListActions, MovieListViewState>() {
 
-    override val initialViewState: MovieListViewState = MovieListViewState.Initial
-
     override fun onBindView(initial: Boolean) {
         if (initial)
             postAction(MovieListActions.LoadTopRatedMoviesPage)
