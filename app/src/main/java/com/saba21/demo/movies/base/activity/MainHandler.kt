@@ -5,7 +5,7 @@ import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.permissio
 
 interface MainHandler {
 
-    fun getPermission(item: CommonPermissions, resultCallback: (Int) -> Unit)
+    fun getPermission(item: CommonPermissions, resultCallback: (Boolean) -> Unit)
     fun showAlert(messageRes: Int)
     fun showAlertForResult(messageRes: Int, positiveClick: () -> Unit)
     fun showLoader()

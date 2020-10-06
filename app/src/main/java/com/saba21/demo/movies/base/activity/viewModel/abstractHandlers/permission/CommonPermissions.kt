@@ -2,6 +2,6 @@ package com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.permissi
 
 import android.Manifest
 
-enum class CommonPermissions(val key: String, val code: Int) {
-    CALL(Manifest.permission.CALL_PHONE, 100)
+enum class CommonPermissions(val key: String) {
+    CALL(Manifest.permission.CALL_PHONE)
 }

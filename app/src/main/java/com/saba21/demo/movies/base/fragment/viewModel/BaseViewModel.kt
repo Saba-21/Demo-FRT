@@ -88,5 +88,4 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
     protected open fun onActionReceived(action: ViewAction): Observable<ViewState> {
         return Observable.empty<ViewState>()
     }
-
 }

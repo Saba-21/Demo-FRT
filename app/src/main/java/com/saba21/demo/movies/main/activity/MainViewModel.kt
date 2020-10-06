@@ -1,6 +1,5 @@
 package com.saba21.demo.movies.main.activity
 
-import android.content.pm.PackageManager
 import com.saba21.demo.movies.base.activity.viewModel.BaseViewModel
 import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.alert.BaseAlert
 import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error.BaseError
@@ -57,10 +56,11 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     override fun <T> handlePermission(item: BasePermission<T>, callback: (T) -> Unit) {
         requireHandler {
             it.getPermission(item.key) { result ->
-                when (result) {
-                    PackageManager.PERMISSION_GRANTED -> callback.invoke(item.pendingPositiveAction)
-                    PackageManager.PERMISSION_DENIED -> callback.invoke(item.pendingNegativeAction)
-                }
+                val action = if (result)
+                    item.pendingPositiveAction
+                else
+                    item.pendingNegativeAction
+                callback.invoke(action)
             }
         }
     }

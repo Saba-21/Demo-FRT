@@ -1,7 +1,7 @@
 package com.saba21.demo.movies.main.activity
 
 import android.app.AlertDialog
-import android.content.pm.PackageManager
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import com.saba21.demo.domain.models.MovieModel
@@ -18,28 +18,12 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         AlertDialog.Builder(this).setMessage("loading").create()
     }
 
-    private val permissionQueue = mutableMapOf<Int, (Int) -> Unit>()
-
-    override fun getPermission(item: CommonPermissions, resultCallback: (Int) -> Unit) {
-        val previousResult = checkSelfPermission(item.key)
-        if (previousResult == PackageManager.PERMISSION_GRANTED) {
-            resultCallback.invoke(PackageManager.PERMISSION_GRANTED)
-        } else {
-            requestPermissions(arrayOf(item.key), item.code)
-            permissionQueue[item.code] = resultCallback
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.isNotEmpty() && permissionQueue.containsKey(requestCode)) {
-            permissionQueue[requestCode]?.invoke(grantResults.first())
-            permissionQueue.remove(requestCode)
-        }
+    override fun getPermission(item: CommonPermissions, resultCallback: (Boolean) -> Unit) {
+        val askPermission =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
+                resultCallback.invoke(result)
+            }
+        askPermission.launch(item.key)
     }
 
     override fun showAlert(messageRes: Int) {
