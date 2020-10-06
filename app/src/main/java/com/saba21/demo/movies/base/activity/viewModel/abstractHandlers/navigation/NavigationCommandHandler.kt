@@ -3,5 +3,4 @@ package com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.navigati
 interface NavigationCommandHandler {
 
     fun handleNavigationCommand(navigationCommand: NavigationCommand)
-
 }

@@ -1,8 +1,8 @@
 package com.saba21.demo.movies.base.fragment.viewModel
 
 import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.alert.AlertCommand
-import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error.ErrorCommand
 import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error.CommonErrors
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error.ErrorCommand
 import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.loader.LoaderCommand
 import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.navigation.NavigationCommand
 import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.permission.PermissionCommand
