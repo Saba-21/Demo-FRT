@@ -1,11 +1,11 @@
 package com.saba21.demo.movies.base.fragment.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.alert.IntermediaryAlertHandler
-import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error.IntermediaryErrorHandler
-import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.loader.IntermediaryLoaderHandler
-import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.navigation.IntermediaryNavigationHandler
-import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.permission.IntermediaryPermissionHandler
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.alert.AlertCommandHandler
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error.ErrorCommandHandler
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.loader.LoaderCommandHandler
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.navigation.NavigationCommandHandler
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.permission.PermissionCommandHandler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -13,19 +13,19 @@ import javax.inject.Inject
 open class BaseUtilViewModel : ViewModel() {
 
     @Inject
-    lateinit var intermediaryErrorHandler: IntermediaryErrorHandler
+    lateinit var errorCommandHandler: ErrorCommandHandler
 
     @Inject
-    lateinit var intermediaryNavigationHandler: IntermediaryNavigationHandler
+    lateinit var navigationCommandHandler: NavigationCommandHandler
 
     @Inject
-    lateinit var intermediaryLoaderHandler: IntermediaryLoaderHandler
+    lateinit var loaderCommandHandler: LoaderCommandHandler
 
     @Inject
-    lateinit var intermediaryAlertHandler: IntermediaryAlertHandler
+    lateinit var alertCommandHandler: AlertCommandHandler
 
     @Inject
-    lateinit var intermediaryPermissionHandler: IntermediaryPermissionHandler
+    lateinit var permissionCommandHandler: PermissionCommandHandler
 
     protected val compositeDisposable: CompositeDisposable = CompositeDisposable()
 

@@ -1,5 +1,5 @@
 package com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.loader
 
-interface BaseLoader {
+interface LoaderCommand {
     val visible: Boolean
 }

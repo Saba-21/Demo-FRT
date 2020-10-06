@@ -6,7 +6,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import retrofit2.HttpException
 
-enum class CommonErrors(@StringRes val messageRes: Int) : BaseError {
+enum class CommonErrors(@StringRes val messageRes: Int) : ErrorCommand {
     FAIL(R.string.error_message_general),
     API_ERROR(R.string.error_message_api),
     OFFLINE(R.string.error_message_offline),

@@ -1,11 +1,11 @@
 package com.saba21.demo.movies.base.fragment.viewModel
 
-import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.alert.BaseAlert
-import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error.BaseError
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.alert.AlertCommand
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error.ErrorCommand
 import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.error.CommonErrors
-import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.loader.BaseLoader
-import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.navigation.BaseNavigation
-import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.permission.BasePermission
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.loader.LoaderCommand
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.navigation.NavigationCommand
+import com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.permission.PermissionCommand
 import com.saba21.demo.movies.base.presentation.action.BaseAction
 import com.saba21.demo.movies.base.presentation.state.BaseViewState
 import com.saba21.demo.movies.base.presentation.state.BaseViewStateData
@@ -53,33 +53,33 @@ abstract class BaseViewModel<ViewAction : BaseAction, ViewState : BaseViewState<
     @Suppress("UNCHECKED_CAST")
     private fun processAction(viewAction: ViewAction): Observable<ViewState> {
         return when (viewAction) {
-            is BaseError -> {
-                intermediaryErrorHandler.handleError(viewAction)
+            is ErrorCommand -> {
+                errorCommandHandler.handleErrorCommand(viewAction)
                 Observable.empty<ViewState>()
             }
-            is BaseNavigation -> {
-                intermediaryNavigationHandler.handleNavigation(viewAction)
+            is NavigationCommand -> {
+                navigationCommandHandler.handleNavigationCommand(viewAction)
                 Observable.empty<ViewState>()
             }
-            is BaseLoader -> {
-                intermediaryLoaderHandler.handleLoader(viewAction)
+            is LoaderCommand -> {
+                loaderCommandHandler.handleLoaderCommand(viewAction)
                 Observable.empty<ViewState>()
             }
-            is BaseAlert<*> -> {
-                intermediaryAlertHandler.handleAlert(viewAction) {
+            is AlertCommand<*> -> {
+                alertCommandHandler.handleAlertCommand(viewAction) {
                     postAction(it as ViewAction)
                 }
                 Observable.empty<ViewState>()
             }
-            is BasePermission<*> -> {
-                intermediaryPermissionHandler.handlePermission(viewAction) {
+            is PermissionCommand<*> -> {
+                permissionCommandHandler.handlePermissionCommand(viewAction) {
                     postAction(it as ViewAction)
                 }
                 Observable.empty<ViewState>()
             }
             else -> onActionReceived(viewAction)
                 .onErrorResumeNext { throwable: Throwable ->
-                    intermediaryErrorHandler.handleError(CommonErrors.get(throwable))
+                    errorCommandHandler.handleErrorCommand(CommonErrors.get(throwable))
                     Observable.empty()
                 }
         }

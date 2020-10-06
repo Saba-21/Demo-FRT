@@ -1,6 +1,6 @@
 package com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.loader
 
-interface IntermediaryLoaderHandler {
+interface LoaderCommandHandler {
 
-    fun handleLoader(item: BaseLoader)
+    fun handleLoaderCommand(item: LoaderCommand)
 }

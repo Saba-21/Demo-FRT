@@ -1,5 +1,5 @@
 package com.saba21.demo.movies.base.activity.viewModel.abstractHandlers.alert
 
-interface BaseAlert<T> {
+interface AlertCommand<T> {
     val pendingAction: T
 }
